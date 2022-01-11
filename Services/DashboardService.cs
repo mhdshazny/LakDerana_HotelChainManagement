@@ -196,6 +196,19 @@ namespace LakDerana_HotelChainManagement.Services
 
         }
 
+        internal int ReservationsCount()
+        {
+            try
+            {
+                var data = context.ReservationData.ToList();
+                return data.Count;
+            }
+            catch (Exception er)
+            {
+                return 0;
+            }
+        }
+
         internal Employee GetEmployeeChartData()
         {
             Employee FinalVM = new Employee();

@@ -1,4 +1,6 @@
-﻿@model LakDerana_HotelChainManagement.ViewModels.BarViewModel
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model LakDerana_HotelChainManagement.ViewModels.BarViewModel
 
 
 @{
@@ -21,14 +23,14 @@
                     <div class="col">
                         <div class="form-group">
                             <label asp-for="HotelID" class="control-label"></label>
-                            <input asp-for="HotelID" class="form-control" required  />
+                            <input asp-for="HotelID" class="form-control" value="@HttpContextAccessor.HttpContext.Session.GetString("UserHotelID")" required readonly />
                             <span asp-validation-for="HotelID" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label asp-for="EmpUpdatedBy" class="control-label"></label>
-                            <input asp-for="EmpUpdatedBy" class="form-control" required />
+                            <input asp-for="EmpUpdatedBy"  value="@HttpContextAccessor.HttpContext.Session.GetString("UserID")"  class="form-control" required readonly/>
                             <span asp-validation-for="EmpUpdatedBy" class="text-danger"></span>
                         </div>
                     </div>
@@ -45,7 +47,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label asp-for="Expense" class="control-label"></label>
-                            <input asp-for="Expense" class="form-control" min="1"/>
+                            <input asp-for="Expense" class="form-control" min="1" />
                             <span asp-validation-for="Expense" class="text-danger"></span>
                         </div>
                     </div>

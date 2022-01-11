@@ -72,15 +72,8 @@
                 </ul>
             </li>
             <li class="nav-item nav-dropdown">
-                <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-folder"></i> Bar Management</a>
-                <ul class="nav-dropdown-items">
-                    <li class="nav-item inner-item">
-                        <a class="nav-link" asp-controller="Bar" asp-action="Index"><i class="fa fa-shopping-cart"></i>Manage Hotel Bar</a>
-                    </li>
-                    <li class="nav-item inner-item">
-                        <a class="nav-link" asp-controller="Bar" asp-action="Index"><i class="fas fa-clipboard-list"></i> Hotel Bar Report</a>
-                    </li>
-                </ul>
+                <a class="nav-link"asp-controller="Bar" asp-action="Index"><i class="fa fa-folder"></i> Bar Management</a>
+
             </li>
             @if (@HttpContextAccessor.HttpContext.Session.GetString("UserType") == "System Administrator" || @HttpContextAccessor.HttpContext.Session.GetString("UserType") == "HR" || @HttpContextAccessor.HttpContext.Session.GetString("UserType") == "Manager in Charge")
             {

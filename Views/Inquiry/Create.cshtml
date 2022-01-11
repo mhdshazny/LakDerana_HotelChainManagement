@@ -59,7 +59,12 @@
         <div class="col">
             <div class="form-group">
                 <label asp-for="CusGender" class="control-label"></label>
-                <input asp-for="CusGender" class="form-control" />
+                @*<input asp-for="CusGender" class="form-control" />*@
+                <select asp-for="CusGender" class="form-control">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
                 <span asp-validation-for="CusGender" class="text-danger"></span>
             </div>
         </div>
@@ -84,6 +89,7 @@
             <div class="form-group">
                 <label asp-for="CusStatus" class="control-label"></label>
                 <input asp-for="CusStatus" class="form-control" value="Inquiry" readonly />
+
                 <span asp-validation-for="CusStatus" class="text-danger"></span>
             </div>
         </div>

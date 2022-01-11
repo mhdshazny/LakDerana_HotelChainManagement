@@ -1,4 +1,6 @@
-﻿@model LakDerana_HotelChainManagement.ViewModels.BarViewModel
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model LakDerana_HotelChainManagement.ViewModels.BarViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -19,7 +21,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label asp-for="HotelID" class="control-label"></label>
-                            <input asp-for="HotelID" class="form-control" required />
+                            <input asp-for="HotelID" class="form-control" required readonly />
                             <span asp-validation-for="HotelID" class="text-danger"></span>
                         </div>
                     </div>
@@ -82,14 +84,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
             </form>
         </div>
     </div>

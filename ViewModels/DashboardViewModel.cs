@@ -17,6 +17,7 @@ namespace LakDerana_HotelChainManagement.ViewModels
         public Sales Bar { get; set; }
         public Sales HotelSales { get; set; }
         public Employee Employee { get; set; }
+        public int ReservationsCount { get; set; }
     }
 
     /// Main Chart Hotel vs Sales

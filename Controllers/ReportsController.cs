@@ -116,5 +116,16 @@ namespace LakDerana_HotelChainManagement.Controllers
             TempData["ToastrType"] = "error";
             return RedirectToAction(nameof(CustomReport));
         }
+        public IActionResult EmployeeAttendanceTodayReport(string dt)
+        {
+            var data = service.EmployeeAttendanceCustomReport(dt);
+            if (data.Count() != 0)
+            {
+                return new ViewAsPdf(data);
+            }
+            TempData["message"] = "Invalid Data Provided / No Data Found";
+            TempData["ToastrType"] = "error";
+            return RedirectToAction(nameof(CustomReport));
+        }
     }
 }

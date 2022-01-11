@@ -1,4 +1,6 @@
-﻿@model LakDerana_HotelChainManagement.ViewModels.EmployeeViewModel
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model LakDerana_HotelChainManagement.ViewModels.EmployeeViewModel
 @{
     Model.ID = ViewBag.NewID;
 }
@@ -109,7 +111,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label asp-for="EmployeeIdentityModel.HotelID" class="control-label"></label>
-                            <input asp-for="EmployeeIdentityModel.HotelID" class="form-control" />
+                            <input asp-for="EmployeeIdentityModel.HotelID" class="form-control" value="@HttpContextAccessor.HttpContext.Session.GetString("UserHotelID")" readonly />
                             <span asp-validation-for="EmployeeIdentityModel.HotelID" class="text-danger"></span>
                         </div>
                     </div>

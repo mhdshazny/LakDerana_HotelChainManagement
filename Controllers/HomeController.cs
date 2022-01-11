@@ -98,6 +98,7 @@ namespace LakDerana_HotelChainManagement.Controllers
             VM.Bar = service.GetBarSales();
             VM.HotelSales = service.GetHotelSales();
             VM.Employee = service.GetEmployeeChartData();
+            VM.ReservationsCount = service.ReservationsCount();
             return View(VM);
 
         }

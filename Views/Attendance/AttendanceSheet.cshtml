@@ -238,7 +238,7 @@
             </div>
             <div class="col">
                 <div class="btn-group pull-right">
-                    <a asp-action="DayAttendanceReport" target="_blank" class="btn btn-md btn-grey"><i class="fa fa-2x fa-file"></i><br />Today Attendance Report</a>
+                    <a asp-action="EmployeeAttendanceCustomReport" asp-controller="Reports" asp-route-dt="@Model.MaintenanceLog.AttendanceDate" target="_blank" class="btn btn-md btn-grey"><i class="fa fa-2x fa-file"></i><br />Today Attendance Report</a>
                 </div>
             </div>
         </div>

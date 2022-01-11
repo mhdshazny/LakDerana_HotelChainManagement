@@ -109,6 +109,9 @@ namespace LakDerana_HotelChainManagement.Controllers
             {
                 return NotFound();
             }
+            TempData["Instruction"] = "Up";
+            TempData["Message"] = "Ready to Update";
+            TempData["ToastrType"] = "success";
             return RedirectToAction(nameof(Index),CusVM);
         }
 
@@ -135,7 +138,7 @@ namespace LakDerana_HotelChainManagement.Controllers
 
                             if (AddData)
                             {
-                                TempData["Instruction"] = "Up";
+                                TempData["Instruction"] = "In";
                                 TempData["Message"] = "Data Successfully Added.";
                                 TempData["ToastrType"] = "success";
                                 return RedirectToAction(nameof(Index), "Inquiry", "Data Successfully Added.");
