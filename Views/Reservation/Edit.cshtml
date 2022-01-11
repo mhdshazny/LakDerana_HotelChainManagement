@@ -1,0 +1,118 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model LakDerana_HotelChainManagement.ViewModels.ReservationViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
+}
+
+
+
+<h4>Edit Reservation Information</h4>
+<hr />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="ID" class="control-label"></label>
+                            <input asp-for="ID" class="form-control" readonly />
+                            <span asp-validation-for="ID" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Hotel" class="control-label"></label>
+                            @*<input asp-for="Hotel" class="form-control" readonly />*@
+                            @*@Html.DropDownListFor(m => m.Hotel, ViewData["HotelList"] as SelectList, "-Select Hotel -", new { @class = "form-control" })*@
+                            @if (@HttpContextAccessor.HttpContext.Session.GetString("UserType") == "System Administrator")
+                            {
+                                @Html.DropDownListFor(m => m.Hotel, ViewData["HotelList"] as SelectList, "-Select Hotel -", new { @class = "form-control" })
+                            }
+                            else
+                            {
+                                <input asp-for="Hotel" class="form-control" readonly />
+                            }
+                            <span asp-validation-for="Hotel" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Customer" class="control-label"></label>
+                            @*<input asp-for="Customer" class="form-control" />*@
+                            @Html.DropDownListFor(m => m.Customer, ViewData["CustomerList"] as SelectList, "-Select Customer-", new { @class = "form-control" })
+                            <span asp-validation-for="Customer" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="DateRage" class="control-label"></label>
+                            <input asp-for="DateRage" type="text" class="form-control" />
+                            <span asp-validation-for="DateRage" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+
+                        <div class="form-group">
+                            <label asp-for="PaymentStatus" class="control-label"></label>
+                            <select asp-for="PaymentStatus" class="form-control">
+                                <option value="Initial Deposit Pending">Initial Deposit Pending</option>
+                                <option value="Initial Deposit Done">Initial Deposit Done</option>
+                                <option value="All Payments Done">All Payments Done</option>
+                                <option value="Reservation Cancelled">Reservation Cancelled (All Payments Refunded)</option>
+                            </select>
+                            <span asp-validation-for="PaymentStatus" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Status" class="control-label"></label>
+                            @*<input asp-for="Status" class="form-control" />*@
+                            <select asp-for="Status" class="form-control">
+                                <option value="Reservation Approval Pending">Reservation Approval Pending</option>
+                                <option value="Reservation Approved">Reservation Approved</option>
+                                <option value="Reservation Closed">Reservation Closed</option>
+                                <option value="Reservation Cancelled">Reservation Cancelled (All Payments Refunded)</option>
+                            </select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <input type="reset" value="Cancel" class="btn btn-block btn-info" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-block btn-primary" />
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('input[name="DateRage"]').daterangepicker({
+            opens: 'left'
+        }, function (start, end, label) {
+            //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
+    });
+</script>

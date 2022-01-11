@@ -1,0 +1,81 @@
+﻿@model LakDerana_HotelChainManagement.ViewModels.HotelRoomViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
+}
+
+<h4>Edit Room Data</h4>
+<hr />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="ID" class="control-label"></label>
+                            <input asp-for="ID" class="form-control" />
+                            <span asp-validation-for="ID" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="HotelID" class="control-label"></label>
+                            <input asp-for="HotelID" class="form-control" />
+                            <span asp-validation-for="HotelID" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="RoomType" class="control-label"></label>
+                            <input asp-for="RoomType" class="form-control" />
+                            <span asp-validation-for="RoomType" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="RoomPricePerNight" class="control-label"></label>
+                            <input asp-for="RoomPricePerNight" class="form-control" />
+                            <span asp-validation-for="RoomPricePerNight" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="RoomDescription" class="control-label"></label>
+                            <input asp-for="RoomDescription" class="form-control" />
+                            <span asp-validation-for="RoomDescription" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="RoomStatus" class="control-label"></label>
+                            <select asp-for="RoomStatus" class="form-control">
+                                <option value="Available">Available</option>
+                                <option value="Reserved">Reserved</option>
+                            </select>
+                            <span asp-validation-for="RoomStatus" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <input type="reset" value="Cancel" class="btn btn-block btn-primary" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-block btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+﻿@model LakDerana_HotelChainManagement.ViewModels.HotelViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
+}
+
+
+<h4>Edit Hotel Profile</h4>
+<hr />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <form asp-action="upsert">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="ID" class="control-label"></label>
+                            <input asp-for="ID" class="form-control read-only" readonly />
+
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="HotelSpecialName" class="control-label"></label>
+                            <input asp-for="HotelSpecialName" class="form-control" />
+                            <span asp-validation-for="HotelSpecialName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="RoomServiceManager" class="control-label"></label>
+                            @*<input asp-for="RoomServiceManager" class="form-control" />*@
+                            @Html.DropDownListFor(m => m.RoomServiceManager, ViewData["ExecutiveEmployeeList"] as SelectList, "-Select Room Service Manager-", new { @class = "form-control" })
+                            <span asp-validation-for="RoomServiceManager" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="HotelManager" class="control-label"></label>
+                            @*<input asp-for="HotelManager" class="form-control" />*@
+                            @Html.DropDownListFor(m => m.HotelManager, ViewData["ExecutiveEmployeeList"] as SelectList, "-Select Hotel Manager-", new { @class = "form-control" })
+
+                            <span asp-validation-for="HotelManager" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="HotelLocation" class="control-label"></label>
+                            <textarea asp-for="HotelLocation" class="form-control"></textarea>
+                            <span asp-validation-for="HotelLocation" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Status" class="control-label"></label>
+                            <select asp-for="Status" class="form-control">
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <input type="reset" value="Cancel" class="btn btn-block btn-info" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-block btn-primary" />
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </form>
+        </div>
+    </div>
+</div>
+

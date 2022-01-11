@@ -1,0 +1,297 @@
+﻿@model LakDerana_HotelChainManagement.ViewModels.AttendanceViewModel
+
+@{
+    ViewData["Title"] = "EmpAttendance";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Scripts{
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('#AddToCart').modal('show');
+            //$('.js-example-basic-single').select2();
+            //$('#daterange').daterangepicker();
+
+        });
+        //$(window).on("beforeunload", function () {
+        //    alert("call")
+        //});
+    </script>
+
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+            .slider.round:before {
+                border-radius: 50%;
+            }
+    </style>
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h1>Mark Attendance</h1>
+            <div class="page-header-breadcrumb pull-right">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a asp-action="Index" asp-controller="Home">
+                            <i class="fa fa-home"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#!">Mark Attendance   </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-header pb-0">
+
+        <div class="row">
+
+            @*@if (@HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Manager" || @HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin")
+                {*@
+            <div class="col">
+                <h4>@*Mark Attendance For : @Html.Raw(Model.MaintenanceLog.AttendanceDate)*@</h4>
+            </div>
+            <div class="col">
+                <div class="btn-group pull-right">
+                    <a @*asp-action="EmpAttendance" asp-route-data="Completed"*@ onclick="executeExample(this)" class="btn btn-md btn-grey"><i class="fa fa-2x fa-check"></i><br />Day Attendance Completed</a>
+                </div>
+            </div>
+            <script>
+                function executeExample(e) {
+                    //swal("Good job!", "You clicked the button!", "success","Aw",{
+                    //    confirmButtonText: "Aww yiss!"
+
+                    //});
+                    swal({
+                        title: "Are you sure?",
+                        text: "Once Updated, you will not be able to change the day schedule easily!",
+                        icon: "warning",
+                        buttons: true,
+                    })
+                        .then((willUpdate) => {
+                            if (willUpdate) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/EmpAttendance/UpdateSchedule",
+                                    success: function (result) {
+                                        if (result == "Success") {
+                                            swal("Poof! Day attendance schedule has been UPDATED!", {
+                                                icon: "success",
+                                            });
+                                        }
+                                        else {
+                                            swal("File CANNOT be UPDATED, Schedule is not updated!");
+                                        }
+                                    }
+                                })
+
+
+                            } else {
+                                swal("You can Work on this File, Schedule is not updated!");
+                            }
+                        });
+                }
+            </script>
+
+            @* } *@
+        </div>
+
+    </div>
+    <div class="card-body">
+        <form asp-action="AttendanceCheck" method="post">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Employee ID
+                        </th>
+                        <th>
+                            Employee Name
+                        </th>
+                        <th>
+                            Employee NIC
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.AttendanceSheet)
+                    {
+                        <tr>
+                            <td>
+                                @Html.Raw(Model.MaintenanceLog.AttendanceDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmpID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Employee.fName)
+                            </td>
+                            <td id="dateDate">
+                                @Html.DisplayFor(modelItem => item.Employee.NIC)
+                            </td>
+                            <td>
+                                @if (item.AttendanceStatus == "Pending")
+                                {
+                                    <label class="switch">
+                                        <input type="checkbox" onchange="CourseData(this)" value="@item.ID" initVal="@item.AttendanceStatus">
+                                        <span class="slider round"></span>
+                                    </label>
+                                }
+                                else if (item.AttendanceStatus == "Absent")
+                                {
+                                    <label class="switch">
+                                        <input type="checkbox" onchange="CourseData(this)" value="@item.ID" data-initVal="@item.AttendanceStatus">
+                                        <span class="slider round"></span>
+                                    </label>
+                                }
+                                else if (item.AttendanceStatus == "Present")
+                                {
+                                    <label class="switch">
+                                        <input type="checkbox" onchange="CourseData(this)" value="@item.ID" initVal="@item.AttendanceStatus" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </form>
+
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col">
+                <p class="text-warning">* Please make sure to press "Attendance Marked" button once finishes</p>
+            </div>
+            <div class="col">
+                <div class="btn-group pull-right">
+                    <a asp-action="DayAttendanceReport" target="_blank" class="btn btn-md btn-grey"><i class="fa fa-2x fa-file"></i><br />Today Attendance Report</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function CourseData(e) {
+
+        if (e.checked == true) {
+            var AttndID123 = e.defaultValue;
+            $.ajax({
+                type: "POST",
+                url: "/EmpAttendance/Present/" + e.defaultValue,
+                data: { data: e.defaultValue },
+                success: function (result) {
+                    if (result == "Success") {
+                        PresentToastr()
+                    }
+                    else {
+                        alert(result + " Something went wrong: Please contact your system vendor for help")
+                    }
+                }
+            })
+            //alert("Something Went wrong: Please contact the system engineer for help.")
+        }
+        else {
+            var AttndID123 = e.defaultValue;
+            $.ajax({
+                type: "POST",
+                url: "/EmpAttendance/Absent/" + e.defaultValue,
+                data: { data: e.defaultValue },
+                success: function (result) {
+                    if (result == "Success") {
+                        AbsentToastr()
+                    }
+                    else {
+                        alert(result + " Something went wrong: Please contact your system vendor for help")
+                    }
+                }
+            })
+            //alert("Something Went wrong: Please contact the system engineer for help.")
+        }
+
+
+    };
+
+    function PresentToastr() {
+        toastr.success("Student Present.")
+    }
+    function AbsentToastr() {
+        toastr.warning("Student Absent.")
+    }
+</script>

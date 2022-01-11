@@ -1,0 +1,179 @@
+﻿
+@{
+    ViewData["Title"] = "Customized Report";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <br />
+            <h2>Customized Reports can be Generated Here.</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <br />
+            <div class="card">
+                <div class="card-header">Hotel Sales Report</div>
+                <div class="card-body">
+                    <form asp-action="SalesCustomReport" asp-controller="Reports" method="post">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label class="control-label">From Date</label>
+                                    <input id="from" name="from" type="date" class="form-control" value="@DateTime.Now" required />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label class="control-label">To Date</label>
+                                    <input id="to" name="to" type="date" class="form-control" value="@DateTime.Now" required />
+                                </div>
+                            </div>
+                            <div class="col-1">
+                            </div>
+                            <div class="col-2">
+                                <br />
+                                <input type="submit" value="Get Report" class="btn btn-block btn-primary" />
+                                @*<input type="submit" id="newTabBtn" name="newTabBtn" hidden class="btn btn-block btn-primary" />
+                                <input type="submit" id="selfTabBtn" name="selfTabBtn" hidden class="btn btn-block btn-primary" />*@
+                                @*<input type="button" value="Get Report" onclick="OpenNewTab('SalesCustomReport')" class="btn btn-block btn-primary" />*@
+                            </div>
+                            <div class="col-2">
+                                <br />
+                                <a type="button" asp-action="AllSalesReport" asp-controller="Reports" target="_blank" class="btn btn-block btn-success">Get All Report</a>
+                            </div>
+                        </div>
+                        @*<script>
+
+                                function OpenNewTab(e) {
+                                    const swalWithBootstrapButtons = Swal.mixin({
+                                        customClass: {
+                                            confirmButton: 'btn btn-danger m-2',
+                                            cancelButton: 'btn btn-info m-2'
+                                        },
+                                        buttonsStyling: false
+                                    })
+
+                                    swalWithBootstrapButtons.fire({
+                                        title: 'Are you sure?',
+                                        text: "You won't be able to revert this!",
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonText: 'Yes, delete it!',
+                                        cancelButtonText: 'No, cancel!',
+                                        reverseButtons: true
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            $('#')
+
+                                        }
+                                        else if (
+                                            /* Read more about handling dismissals below */
+                                            result.dismiss === Swal.DismissReason.cancel
+                                        ) {
+                                            //swalWithBootstrapButtons.fire(
+                                            //    'Cancelled',
+                                            //    'Your data is safe :)',
+                                            //    'error'
+                                            //)
+                                        }
+                                    })
+                                }
+                        </script>*@
+                    </form>
+                </div>
+            </div> 
+            <br />
+            <div class="card">
+                <div class="card-header">Reservations Report</div>
+                <div class="card-body">
+                    <form asp-action="ReservationsCustomReport" method="post">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label class="control-label">From Date</label>
+                                    <input id="from" name="from" type="date" class="form-control" value="@DateTime.Now" required />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label class="control-label">To Date</label>
+                                    <input id="to" name="to" type="date" class="form-control" value="@DateTime.Now" required />
+                                </div>
+                            </div>
+                            <div class="col-1">
+                            </div>
+                            <div class="col-2">
+                                <br />
+                                <input type="submit" value="Get Report" class="btn btn-block btn-primary" />
+                            </div>
+                            <div class="col-2">
+                                <br />
+                                <a type="button" asp-action="ReservationsReport" asp-controller="Reports" target="_blank" class="btn btn-block btn-success">Get All Report</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div> 
+            <br />
+            <div class="card">
+                <div class="card-header">Bar Sales Report</div>
+                <div class="card-body">
+                    <form asp-action="BarSalesCustomReport" method="post">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label class="control-label">From Date</label>
+                                    <input id="from" name="from" type="date" class="form-control" value="@DateTime.Now" required />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label class="control-label">To Date</label>
+                                    <input id="to" name="to" type="date" class="form-control" value="@DateTime.Now" required />
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <br />
+                            </div>
+                            <div class="col-2">
+                                <br />
+                                <input type="submit" value="Get Report" class="btn btn-block btn-primary" />
+                            </div>
+                            <div class="col-2">
+                                <br />
+                                <a type="button" asp-action="BarSalesReport" asp-controller="Reports" target="_blank" class="btn btn-block btn-success">Get All Report</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div> 
+            <br />
+            <div class="card">
+                <div class="card-header">Employee Attendance Report</div>
+                <div class="card-body">
+                    <form asp-action="EmployeeAttendanceCustomReport" method="post">
+                            <div class="row">
+                                <div class="col-3">
+                                    <label class="control-label">Attendace Date</label>
+                                </div>
+                                <div class="col-3">
+                                        <input type="date" id="dt" name="dt" class="form-control" value="@DateTime.Now" required/>
+                                </div>
+                                <div class="col-1">
+                                </div>
+                                <div class="col-2">
+                                        <input type="submit" value="Get Report" class="form-control btn btn-block btn-primary" />
+                                </div>
+                                <div class="col-2">
+                                        <a type="button" asp-action="AllAttendanceReport" asp-controller="Reports" target="_blank" class="btn btn-block btn-success">Get All Report</a>
+                                </div>
+                            </div>
+                    </form>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+﻿@model IEnumerable<LakDerana_HotelChainManagement.Models.BarModel>
+
+@{
+    ViewData["Title"] = "Bar Sales Report";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Sales Report</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="jumbotron-fluid" style="text-align:center;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size:larger">
+        <h1 class="text-center">Bar Sales Report</h1>
+        <h4 class="text-center">All Bar Sales details from @Model.Select(i => i.IncomeExpenseUpdatedDate).Min().ToShortDateString()  &nbsp; Until @Model.Select(i => i.IncomeExpenseUpdatedDate).Max().ToShortDateString()</h4>
+        <h5 class="text-center">Lak-Derana Hotels Pvt Ltd </h5>
+        <h6 class="text-center" id="para1"></h6>
+    </div>
+    <br />
+    <h4 style="font-weight:bold; margin-bottom:2%;">Bar Sales Statistics</h4>
+    <div>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+        <h5>Total Number of Transaction = <em style="color:crimson; font-style: normal;"> @Model.Count() </em></h5>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+        <h5>Total Profits = <em style="color:crimson; font-style: normal;"> @Model.Where(m => m.Status == "Approved").Sum(i => i.Sales - i.Expense) </em></h5>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+        <h5>Total Expenses = <em style="color:crimson; font-style: normal;"> @Model.Where(m => m.Status == "Approved").Sum(i => i.Expense) </em></h5>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+    </div>
+    <h4 style="font-weight:bold;margin-top:5%; margin-bottom:2%; ">All Bar Sales Records</h4>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.HotelID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmpUpdatedBy)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IncomeExpenseUpdatedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Expense)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sales)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HotelID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmpUpdatedBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IncomeExpenseUpdatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Expense)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sales)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>

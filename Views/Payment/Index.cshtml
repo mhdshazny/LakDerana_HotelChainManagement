@@ -1,0 +1,216 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<LakDerana_HotelChainManagement.ViewModels.PaymentViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<!-- Breadcrumb -->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">Payments</li>
+    <li class="breadcrumb-item active">Manage Payments</li>
+
+    <!-- Breadcrumb Menu-->
+    <li class="breadcrumb-menu d-md-down-none">
+        <div class="btn-group" role="group" aria-label="Button group">
+            <a class="btn" href="#"><i class="icon-speech"></i></a>
+            <a class="btn" href="./"><i class="fa fa-bar-chart"></i> &nbsp;Manage Payment</a>
+        </div>
+    </li>
+</ol>
+
+<div class="container-fluid">
+    <h2>Manage Payments</h2>
+    <hr />
+    <div class="card">
+        <div class="card-body">
+            <h5 class="pull-right">@ViewBag.ReturnMsg</h5>
+            @if (ViewBag.InOut == "Up")
+            {
+                @await Html.PartialAsync("Edit", new LakDerana_HotelChainManagement.ViewModels.PaymentViewModel())
+
+            }
+            else if (ViewBag.InOut == "In")
+            {
+                @await Html.PartialAsync("Create", new LakDerana_HotelChainManagement.ViewModels.PaymentViewModel())
+
+            }
+
+        </div>
+    </div>
+
+
+    <hr />
+
+    <div class="card">
+        <div class="card-body">
+            <h4>All Payments</h4><hr />
+            <table class="table table-responsive-lg" id="IndexTable">
+                <thead>
+                    <tr>
+                        <th>
+                            Reservation ID
+                        </th>
+                        <th>
+                            Reservation Fee
+                        </th>
+                        <th>
+                            Service Charge
+                        </th>
+                        <th>
+                            Net Amount
+                        </th>
+                        <th>
+                            Discount
+                        </th>
+                        <th>
+                            Total Payable
+                        </th>
+                        <th>
+                            Advance Amount
+                        </th>
+                        <th>
+                            Final Payment Date
+                        </th>
+                        <th>
+                            Checkout
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th class="text-danger">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ReservationID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ReservationFee)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.HotelServiceCharge)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NetAmount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DiscountAmount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalPayableAmount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AdvancePaymentAmount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FinalPaymentDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PaymentStatus)
+                            </td>
+                            <td>
+                                @if (item.PaymentStatus == "All Payments Done")
+                                {
+                                <a asp-action="Checkout" asp-controller="Reservation" asp-route-id="@item.ReservationID"><i class="fa fa-check fa-2x"></i>Checkout</a>
+                                }
+                                else
+                                {
+                                <a asp-action="Checkout" asp-controller="Reservation" asp-route-id="@item.ReservationID" class="text-danger"> Payments Pending</a>
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.ID"><i class="fa fa-edit fa-lg"></i></a> |
+                                <a asp-action="Details" asp-route-id="@item.ID"><i class="fa fa-info fa-lg"></i></a>
+
+                                @if (@HttpContextAccessor.HttpContext.Session.GetString("UserType") == "System Administrator")
+                                {
+
+                                    <a href="#" onclick="ConfirmDelete('@item.ID')">|<i class="fa fa-remove fa-lg"></i></a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<script>
+
+    function ConfirmDelete(e) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-danger m-2',
+                cancelButton: 'btn btn-info m-2'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Payment/Delete",
+                    data: { id: e },
+                    success: function (result) {
+                        if (result == "Success") {
+                            swalWithBootstrapButtons.fire(
+                                'Success',
+                                'Your Data is Deleted :)',
+                                'Success'
+                            ).then((res) => {
+                                if (res.isConfirmed) {
+                                    location.reload();
+                                }
+                            })
+                        }
+                        else {
+                            swalWithBootstrapButtons.fire(
+                                'Error',
+                                'Your Data is safe :)',
+                                'error'
+                            )
+                        }
+                    }
+                })
+
+            }
+            else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                //swalWithBootstrapButtons.fire(
+                //    'Cancelled',
+                //    'Your data is safe :)',
+                //    'error'
+                //)
+            }
+        })
+    }
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

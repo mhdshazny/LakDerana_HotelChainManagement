@@ -1,0 +1,214 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<LakDerana_HotelChainManagement.ViewModels.EmployeeViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Breadcrumb -->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">Inquiry</li>
+    <li class="breadcrumb-item active">Manage Employees</li>
+
+    <!-- Breadcrumb Menu-->
+    <li class="breadcrumb-menu d-md-down-none">
+        <div class="btn-group" role="group" aria-label="Button group">
+            <a class="btn" href="#"><i class="icon-speech"></i></a>
+            <a class="btn" href="./"><i class="fa fa-bar-chart"></i> &nbsp;Manage Employees</a>
+        </div>
+    </li>
+</ol>
+
+<div class="container-fluid">
+    <h2>Manage Employees</h2>
+    <h5 class="pull-right">@ViewBag.ReturnMsg</h5>
+
+    <hr />
+    <div class="card">
+        <div class="card-body">
+            @if (ViewBag.InOut == "Up")
+            {
+
+                @await Html.PartialAsync("Edit", new LakDerana_HotelChainManagement.ViewModels.EmployeeViewModel())
+
+            }
+            else if (ViewBag.InOut == "In")
+            {
+
+                @await Html.PartialAsync("Create", new LakDerana_HotelChainManagement.ViewModels.EmployeeViewModel())
+
+            }
+
+        </div>
+    </div>
+
+
+    <hr />
+
+    <div class="card">
+        <div class="card-body">
+            <h4>All Inquiries</h4><hr />
+
+            <table class="table table-responsive" id="IndexTable">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.fName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.lName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Gender)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DoB)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NIC)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Address)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Contact)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EmployeeIdentityModel.HotelID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EmployeeIdentityModel.EmpRole)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Status)
+                        </th>
+                        <th class="text-danger">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.fName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.lName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Gender)
+                            </td>
+                            <td>
+                                @item.DoB.ToString("yyyy/MMM/dd")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NIC)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Contact)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmployeeIdentityModel.HotelID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmployeeIdentityModel.EmpRole)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                            <td>
+
+                                <a asp-action="Edit" asp-route-id="@item.ID"><i class="fa fa-edit fa-lg"></i></a> |
+                                <a asp-action="Details" asp-route-id="@item.ID"><i class="fa fa-info fa-lg"></i></a>
+
+                                @if (@HttpContextAccessor.HttpContext.Session.GetString("UserType") == "System Administrator")
+                                {
+
+                                    <a href="#" onclick="ConfirmDelete('@item.ID')">|<i class="fa fa-remove fa-lg"></i></a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function ConfirmDelete(e) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-danger m-2',
+                cancelButton: 'btn btn-info m-2'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Employee/Delete",
+                    data: { id: e },
+                    success: function (result) {
+                        if (result == "Success") {
+                            swalWithBootstrapButtons.fire(
+                                'Success',
+                                'Your Data is Deleted :)',
+                                'Success'
+                            ).then((res) => {
+                                if (res.isConfirmed) {
+                                    location.reload();
+                                }
+                            })
+                        }
+                        else {
+                            swalWithBootstrapButtons.fire(
+                                'Error',
+                                'Your Data is safe :)',
+                                'error'
+                            )
+                        }
+                    }
+                })
+
+            }
+            else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                //swalWithBootstrapButtons.fire(
+                //    'Cancelled',
+                //    'Your data is safe :)',
+                //    'error'
+                //)
+            }
+        })
+    }
+</script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

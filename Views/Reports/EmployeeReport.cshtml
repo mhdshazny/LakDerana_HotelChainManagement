@@ -1,0 +1,106 @@
+﻿@model IEnumerable<LakDerana_HotelChainManagement.Models.EmployeeModel>
+
+@{
+    ViewData["Title"] = "EmployeeReport";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Employees Report</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="jumbotron-fluid" style="text-align:center;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size:larger">
+        <h1 class="text-center">Employees Report</h1>
+        <h4 class="text-center">All Employees details from the beginning</h4>
+        <h5 class="text-center">Lak-Derana Hotels Pvt Ltd </h5>
+        <h6 class="text-center" id="para1"></h6>
+    </div>
+    <br />
+    <h4 style="font-weight:bold; margin-bottom:2%;">Employees Statistics</h4>
+    <div>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+        <h5>Total Number of Employees = <em style="color:crimson; font-style: normal;"> @Model.Count() </em></h5>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+        <h5>Total Active Employees = <em style="color:crimson; font-style: normal;">  @Model.Where(m => m.Status == "Active").Count()</em></h5>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+        <h5>Total Inactive Employees = <em style="color:crimson; font-style: normal;"> @Model.Where(m => m.Status != "Active").Count() </em></h5>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+    </div>
+    <h4 style="font-weight:bold;margin-top:5%; margin-bottom:2%; ">All Employees Records</h4>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.fName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.lName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Gender)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DoB)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NIC)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Contact)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.lName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td>
+                        @item.DoB.ToString("yyyy/MMM/dd")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NIC)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Contact)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>

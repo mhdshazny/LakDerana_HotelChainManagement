@@ -1,0 +1,89 @@
+﻿@model IEnumerable<LakDerana_HotelChainManagement.ViewModels.AttendanceReportViewModel>
+
+@{
+    ViewData["Title"] = "All Attendance Report";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>All Attendance Report</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="jumbotron-fluid" style="text-align:center;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size:larger">
+        <h1 class="text-center">Attendance Report</h1>
+        <h4 class="text-center">All Attendance details from the beginning</h4>
+        <h5 class="text-center">Lak-Derana Hotels Pvt Ltd </h5>
+        <h6 class="text-center" id="para1"></h6>
+    </div>
+    <br />
+    <h4 style="font-weight:bold; margin-bottom:2%;">Attendance Statistics</h4>
+    <div>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+        <h5>Total Number of Attendance Records = <em style="color:crimson; font-style: normal;"> @Model.Count() </em></h5>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+    </div>
+    <h4 style="font-weight:bold;margin-top:5%; margin-bottom:2%; ">All Attendance Records</h4>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Attendance Log ID
+                </th>
+                <th>
+                    Attendance Date
+                </th>
+                <th>
+                    Day Description
+                </th>
+                <th>
+                    Employee ID
+                </th>
+                <th>
+                    Employee Name
+                </th>
+                <th>
+                    Attendance Status
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                foreach (var Modelitem in item.AttendaceSheet)
+                {
+                    <tr>
+                        <td>
+                            @Html.Raw(item.AttendaceLog.AttendanceLogID)
+                        </td>
+                        <td>
+                            @Html.Raw(item.AttendaceLog.AttendanceDate)
+                        </td>
+                        <td>
+                            @Html.Raw(item.AttendaceLog.DayDescription)
+                        </td>
+                        <td>
+                            @item.Employees.Where(i => i.ID == Modelitem.EmpID).FirstOrDefault().ID.ToString()
+                        </td>
+                        <td>
+                            @item.Employees.Where(i => i.ID == Modelitem.EmpID).FirstOrDefault().fName.ToString()
+                        </td>
+                        <td>
+                            @Html.Raw(item.AttendaceLog.Status)
+                        </td>
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>
+

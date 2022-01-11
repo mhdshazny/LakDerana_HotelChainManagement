@@ -1,0 +1,863 @@
+﻿@model LakDerana_HotelChainManagement.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Welcome To Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style type="text/css">
+/*    body {
+        margin-top: 20px;
+        background: #FAFAFA;
+    }*/
+
+    .order-card {
+        color: #fff;
+    }
+
+    .bg-c-blue {
+        background: linear-gradient(45deg,#4099ff,#73b4ff);
+    }
+
+    .bg-c-green {
+        background: linear-gradient(45deg,#2ed8b6,#59e0c5);
+    }
+
+    .bg-c-yellow {
+        background: linear-gradient(45deg,#FFB64D,#ffcb80);
+    }
+
+    .bg-c-pink {
+        background: linear-gradient(45deg,#FF5370,#ff869a);
+    }
+
+
+    .card {
+        border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+        box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+        border: none;
+        margin-bottom: 30px;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .card .card-block {
+            padding: 25px;
+        }
+
+    .order-card i {
+        font-size: 26px;
+    }
+
+    .f-left {
+        float: left;
+    }
+
+    .f-right {
+        float: right;
+    }
+</style>
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+<br />
+<div class="container-fluid">
+    <h1>@ViewData["Title"]</h1>
+
+    <div class="row">
+
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-c-green text-dark">
+                <div class="card-block">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <p class="m-b-5 font-weight-bold">Total Income</p>
+                            <h4 class="m-b-0">Rs 60000.00</h4>
+
+                        </div>
+                        <div class="col col-auto text-right">
+                            <i class="far fa-credit-card fa-5x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-info text-dark">
+                <div class="card-block">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <p class="m-b-5 font-weight-bold">Student Count</p>
+                            <h4 class="m-b-0"> 600</h4>
+                        </div>
+                        <div class="col col-auto text-right">
+                            <i class="fa fa-user fa-5x"></i>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-c-pink text-dark">
+                <div class="card-block">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <p class="m-b-5 font-weight-bold">Total Employees</p>
+                            <h4 class="m-b-0">20</h4>
+                        </div>
+                        <div class="col col-auto text-right">
+                            <i class="fa fa-users fa-5x"></i>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-c-blue text-dark">
+                <div class="card-block">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <p class="m-b-5 font-weight-bold">Total Profit</p>
+                            <h4 class="m-b-0">Rs 60000.00</h4>
+                        </div>
+                        <div class="col col-auto text-right">
+                            <i class="fa fa-shopping-cart fa-5x"></i>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="col-xl-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-left ">
+                            <h5>Hotels-Sales Chart</h5>
+                        </div>
+                    </div>
+                    <div class="card-block-big">
+                        <div id="chartdiv1" style="height:250px"></div>
+                    </div>
+                </div>
+            </div>
+
+
+        <!--<div class="col-xl-6 col-md-12">
+            <div class="card feed-card">
+                <div class="card-header">
+                    <h5>Notifications</h5>
+                </div>
+                <div class="card-block">-->
+        @*@foreach (var item in RegStd)
+            {
+                <div class="row m-b-30">
+                    <div class="col-auto p-r-0">
+                        <i class="feather icon-bell bg-simple-c-blue feed-icon"></i>
+                    </div>
+                    <div class="col">
+                        <h6 class="m-b-5">New Student Registered for @item.Course_ID <span class="text-muted f-right f-13">@item.Reg_Date.ToShortDateString()</span></h6>
+                    </div>
+                </div>
+            }*@
+
+        <!--</div>
+            </div>
+        </div>-->
+        <!--<div class="col-xl-6 col-md-12">
+            <div class="card feed-card">
+                <div class="card-header">
+                    <h5>Student Reviews</h5>
+                </div>
+                <div class="card-block">-->
+        @*@foreach (var item in StdFeedback)
+            {
+                <div class="row m-b-30">
+                    <div class="col-auto p-r-0">
+                        <i class="fa fa-pencil bg-simple-c-blue feed-icon"></i>
+                    </div>
+                    <div class="col">
+                        <h6 class="m-b-5">Class of @item.CourseID has earned : <span class="text-muted f-right f-13">@item.Rating</span></h6>
+                    </div>
+                </div>
+            }*@
+
+        <!--</div>
+            </div>
+        </div>-->
+
+        <div class="col-xl-6 col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Total Bar Sales</h5>
+
+                    </div>
+                    <div class="card-block">
+                        <p class="text-c-green f-w-500"><i class="feather icon-chevrons-right m-r-5"></i> Bar Sales denoted as Sales Below : For @Model.Bar.Months  Months</p>
+                        <div class="row">
+                            <div class="col-4 b-r-default">
+                                <p class="text-muted m-b-5">Overall Income</p>
+                                <h5>Rs. @Model.Bar.OverallIncome.ToString("0.00")</h5>
+                            </div>
+                            <div class="col-4 b-r-default">
+                                <p class="text-muted m-b-5">Monthly Income %</p>
+                                <h5>Rs. @Model.Bar.MonthlyIncome.ToString("0.00")</h5>
+                            </div>
+                            <div class="col-4">
+                                <p class="text-muted m-b-5">Average Day Income</p>
+                                <h5>Rs. @Model.Bar.AverageDayIncome.ToString("0.00")</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="chartdiv2" style="height:250px"></div>
+                    <script>
+                        am4core.ready(function () {
+
+                            // Themes begin
+                            am4core.useTheme(am4themes_animated);
+                            // Themes end
+
+                            // Create chart instance
+                            var chart = am4core.create("chartdiv2", am4charts.XYChart);
+                            chart.paddingRight = 25;
+
+                            // Add data
+                            chart.data =@Html.Raw(Json.Serialize(Model.Bar.SalesList));
+                            //    [{
+                            //    "x": 0,
+                            //    "y": 400,
+                            //    "color": "0"
+                            //}];
+
+                            // Create axes
+                            var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+                            //DateAxis.renderer.grid.template.disabled = true;
+                            //DateAxis.renderer.labels.template.disabled = true;
+                            dateAxis.dateFormats.setKey("date", "dt");
+                            dateAxis.periodChangeDateFormats.setKey("date", "dt");
+                            dateAxis.startLocation = 1;
+                            dateAxis.endLocation = 1;
+
+                            var Min =@Model.Bar.GraphMin.ToString();
+                            var Max =@Model.Bar.GraphMax.ToString();
+
+                            var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+                            yAxis.numberFormatter = new am4core.NumberFormatter();
+                            yAxis.numberFormatter.numberFormat = "#,###";
+                            yAxis.min = @Model.Bar.GraphMin.ToString();
+                            yAxis.max = @Model.Bar.GraphMax.ToString();
+                            yAxis.strictMinMax = true;
+
+                            // Create series
+                            var series = chart.series.push(new am4charts.LineSeries());
+                            series.dataFields.dateX = "date";
+                            series.dataFields.valueY = "income";
+                            series.name = name;
+                            series.tooltipText = "{dateX}: [bold]{valueY}[/]";
+                            series.strokeWidth = 0;
+                            series.fillOpacity = 0.8;
+                            series.propertyFields.fill = "color";
+
+
+                            // Cursor
+                            chart.cursor = new am4charts.XYCursor();
+                            chart.cursor.snapToSeries = series;
+
+                        }); // end am4core.ready()
+                    </script>
+                </div>
+            </div>
+
+
+
+        <div class="col-xl-6 col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>LakDerana Chain Sales and Profits</h5>
+                    </div>
+                    <div class="card-block">
+                        <p class="text-c-green f-w-500"><i class="feather icon-chevrons-right m-r-15"></i>Total LakDerana Chain Sales and Profits denoted</p>
+                        <div class="row">
+                            <div class="col-4 b-r-default">
+                                <p class="text-muted m-b-5">Overall Income</p>
+                                <h5>Rs. @Model.HotelSales.OverallIncome.ToString("0.00")</h5>
+
+                            </div>
+                            <div class="col-4 b-r-default">
+                                <p class="text-muted m-b-5">Average Monthly Profit %</p>
+                                <h5>Rs. @Model.HotelSales.MonthlyIncome.ToString("0.00")</h5>
+
+                            </div>
+                            <div class="col-4">
+                                <p class="text-muted m-b-5">Average Day Profit</p>
+                                <h5>Rs. @Model.HotelSales.AverageDayIncome.ToString("0.00")</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="chartdiv3" style="height:250px"></div>
+                    <script>
+                        am4core.ready(function () {
+
+                            // Themes begin
+                            am4core.useTheme(am4themes_animated);
+                            // Themes end
+
+                            // Create chart instance
+                            var chart = am4core.create("chartdiv3", am4charts.XYChart);
+                            chart.paddingRight = 35;
+                            chart.paddingLeft = 15;
+
+                            // Add data
+                            chart.data = @Html.Raw(Json.Serialize(Model.HotelSales.SalesList));
+                            //    [{
+                            //    "Date": 0,
+                            //    "Income": 500,
+                            //    "color": chart.colors.getIndex(0)
+                            //}];
+
+
+                            // Create axes
+                            var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+                            //DateAxis.renderer.grid.template.disabled = true;
+                            //DateAxis.renderer.labels.template.disabled = true;
+                            dateAxis.dateFormats.setKey("month", "dt");
+                            dateAxis.periodChangeDateFormats.setKey("month", "dt");
+                            dateAxis.startLocation = -1;
+                            dateAxis.endLocation = 10;
+                            //xAxis.min = 0;
+                            //xAxis.max = 50;
+                            //xAxis.strictMinMax = true;
+
+                            var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+                            yAxis.numberFormatter = new am4core.NumberFormatter();
+                            yAxis.numberFormatter.numberFormat = "#,###";
+                            yAxis.min = @Model.HotelSales.GraphMin.ToString();
+                            yAxis.max = @Model.HotelSales.GraphMax.ToString();
+                            yAxis.strictMinMax = true;
+
+                            // Create series
+                            var series = chart.series.push(new am4charts.LineSeries());
+                            series.dataFields.dateX = "date";
+                            series.dataFields.valueY = "income";
+                            series.name = name;
+                            series.tooltipText = "{dateX}: [bold]{valueY}[/]";
+                            series.strokeWidth = 0;
+                            series.fillOpacity = 0.8;
+                            series.propertyFields.fill = "color";
+
+
+                            // Create grid/ranges for X axis
+                            //for (var i = 0; i < chart.data.length; i++) {
+                            //    var value = chart.data[i].x;
+                            //    var range = DateAxis.axisRanges.create();
+                            //    range.value = value;
+                            //    range.label.text = value;
+                            //}
+
+                            // Cursor
+                            chart.cursor = new am4charts.XYCursor();
+                            chart.cursor.snapToSeries = series;
+
+                        }); // end am4core.ready()
+                    </script>
+                </div>
+            </div>
+
+
+
+        <div class="col-xl-6 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Employee Distribution</h5>
+
+                </div>
+
+                <div id="chartdiv4" style="height:400px"></div>
+                <br />
+                <script>
+                        am4core.ready(function () {
+
+                            // Themes begin
+                            am4core.useTheme(am4themes_animated);
+                            // Themes end
+
+                            // Create chart instance
+                            var chart = am4core.create("chartdiv4", am4charts.PieChart);
+
+                            // Add and configure Series
+                            var pieSeries = chart.series.push(new am4charts.PieSeries());
+                            pieSeries.dataFields.value = "count";
+                            pieSeries.dataFields.category = "role";
+
+                            // Let's cut a hole in our Pie chart the size of 30% the radius
+                            chart.innerRadius = am4core.percent(30);
+
+                            // Put a thick white border around each Slice
+                            pieSeries.slices.template.stroke = am4core.color("#fff");
+                            pieSeries.slices.template.strokeWidth = 2;
+                            pieSeries.slices.template.strokeOpacity = 1;
+                            pieSeries.slices.template
+                                // change the cursor on hover to make it apparent the object can be interacted with
+                                .cursorOverStyle = [
+                                    {
+                                        "property": "cursor",
+                                        "value": "pointer"
+                                    }
+                                ];
+
+                            pieSeries.alignLabels = true;
+                            pieSeries.labels.template.bent = false;
+                            pieSeries.labels.template.radius =1;
+                            pieSeries.labels.template.padding(0, 0, 0, 0);
+
+                            pieSeries.ticks.template.disabled = true;
+
+                            // Create a base filter effect (as if it's not there) for the hover to return to
+                            var shadow = pieSeries.slices.template.filters.push(new am4core.DropShadowFilter);
+                            shadow.opacity = 0;
+
+                            // Create hover state
+                            var hoverState = pieSeries.slices.template.states.getKey("hover"); // normally we have to create the hover state, in this case it already exists
+
+                            // Slightly shift the shadow and make it more prominent on hover
+                            var hoverShadow = hoverState.filters.push(new am4core.DropShadowFilter);
+                            hoverShadow.opacity = 0.7;
+                            hoverShadow.blur = 5;
+
+                            // Add a legend
+                            chart.legend = new am4charts.Legend();
+
+                            var TempData = [];
+
+                            var RoleCountArray = @Html.Raw(Json.Serialize(Model.Employee.EmployeeDestribution));
+
+
+                            $.each(RoleCountArray, function (key, item) {
+
+                                TempData["Role"] = item.role;
+                            })
+
+
+                            chart.data = @Html.Raw(Json.Serialize(Model.Employee.EmployeeDestribution));
+
+                            //    [{
+                            //    "Role": "Admin",
+                            //    "Count": 5
+                            //}];
+
+                        }); // end am4core.ready()
+                </script>
+            </div>
+        </div>
+
+
+        <div class="col-xl-6 col-md-12">
+            <div class="card">
+
+                <div class="card-header">
+                    <h5>Latest Employee Attendance : Date 
+                   
+                    </h5>
+                </div>
+
+                <div id="TargetProgressDiv" style="height:250px;width:100%"></div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-4 b-r-default">
+                            <p class="text-muted m-b-5">All Employees</p>
+                            <h5 id="Target"></h5>
+                        </div>
+                        <div class="col-4 b-r-default">
+                            <p class="text-muted m-b-5">Present</p>
+                            <h5 id="Achieved"></h5>
+                        </div>
+                        <div class="col-4">
+                            <p class="text-muted m-b-5 red">Absent</p>
+                            <h5 id="Rem"></h5>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                                    am4core.ready(function () {
+
+                                        // Themes begin
+                                        am4core.useTheme(am4themes_animated);
+                                        // Themes end
+
+                                        // Create chart instance
+                                        var chart = am4core.create("TargetProgressDiv", am4charts.PieChart);
+                                        chart.startAngle = 160;
+                                        chart.endAngle = 380;
+
+                                        // Let's cut a hole in our Pie chart the size of 40% the radius
+                                        chart.innerRadius = am4core.percent(60);
+
+                                        var Achived = @Model.Employee.AttendeeCount;
+                                        var Rem =@Model.Employee.AbcenteeCount;
+                                        let TargetTemp = Achived + Rem;
+                                        $('#Target').text(TargetTemp)
+                                        $('#Achieved').text(Achived)
+                                        $('#Rem').text(Rem)
+
+                                        // Add data
+                                        chart.data = [{
+                                            "country": "Present",
+                                            "bottles": Achived
+                                        }, {
+                                            "country": "Absent",
+                                            "bottles": Rem
+                                        }];
+
+                                        // Add second series
+                                        var pieSeries2 = chart.series.push(new am4charts.PieSeries());
+                                        pieSeries2.dataFields.value = "bottles";
+                                        pieSeries2.dataFields.category = "country";
+                                        pieSeries2.slices.template.stroke = new am4core.InterfaceColorSet().getFor("background");
+                                        pieSeries2.slices.template.strokeWidth = 0;
+                                        pieSeries2.slices.template.strokeOpacity = 1;
+                                        pieSeries2.slices.template.states.getKey("hover").properties.shiftRadius = 0.05;
+                                        pieSeries2.slices.template.states.getKey("hover").properties.scale = 1;
+
+                                        pieSeries2.labels.template.disabled = false;
+                                        pieSeries2.ticks.template.disabled = true;
+
+
+                                        var label = chart.seriesContainer.createChild(am4core.Label);
+                                        label.textAlign = "middle";
+                                        label.horizontalCenter = "middle";
+                                        label.verticalCenter = "middle";
+                                        label.adapter.add("text", function (text, target) {
+                                            return "[font-size:18px]Totally Present[/]:\n[bold font-size:30px]" + Achived + "[/]";
+                                        })
+
+                                    }); // end am4core.ready()
+
+                </script>
+
+            </div>
+
+
+        </div>
+        <!--<div class="col-xl-6 col-md-12">
+            <div class="card">
+
+                <div class="card-header">
+                    <h5>Monthly Cafe Target Progress</h5>
+                    <div class="card-header-right">
+                        <ul class="list-unstyled card-option">
+                            <li><i class="fa fa-window-maximize full-card"></i></li>
+                            <li><i class="fa fa-trash close-card"></i></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="CafeTargetProgressDiv" style="height:250px;width:100%"></div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-4 b-r-default">
+                            <p class="text-muted m-b-5">Overall</p>
+                            <h5 id="CafeTarget"></h5>
+                        </div>
+                        <div class="col-4 b-r-default">
+                            <p class="text-muted m-b-5">Achieved</p>
+                            <h5 id="CafeAchieved"></h5>
+                        </div>
+                        <div class="col-4">
+                            <p class="text-muted m-b-5 red">Remaining</p>
+                            <h5 id="CafeRem"></h5>
+                        </div>
+                    </div>
+                </div>-->
+        @*<div class="col-6">
+                <h6 class="text-muted">Remaining</h6>
+                <p class="text-muted">495</p>
+                <button class="btn btn-primary btn-outline-primary btn-round btn-sm">Manage</button>
+            </div>*@
+        <!--<script>
+                    am4core.ready(function () {
+
+                        // Themes begin
+                        am4core.useTheme(am4themes_animated);
+                        // Themes end
+
+                        // Create chart instance
+                        var chart = am4core.create("CafeTargetProgressDiv", am4charts.PieChart);
+                        chart.startAngle = 160;
+                        chart.endAngle = 380;
+
+                        // Let's cut a hole in our Pie chart the size of 40% the radius
+                        chart.innerRadius = am4core.percent(60);
+
+                        var Achived = @ViewBag.TotCafeTarget;
+                        var Rem = @ViewBag.RemCafeTarget;
+                        let TargetTemp = Achived + Rem;
+                        $('#CafeTarget').text(TargetTemp)
+                        $('#CafeAchieved').text(Achived)
+                        $('#CafeRem').text(Rem)
+
+                        // Add data
+                        chart.data = [{
+                            "country": "Achieved",
+                            "bottles": Achived
+                        }, {
+                            "country": "Remaining",
+                            "bottles": Rem
+                        }];
+
+                        // Add second series
+                        var pieSeries2 = chart.series.push(new am4charts.PieSeries());
+                        pieSeries2.dataFields.value = "bottles";
+                        pieSeries2.dataFields.category = "country";
+                        pieSeries2.slices.template.stroke = new am4core.InterfaceColorSet().getFor("background");
+                        pieSeries2.slices.template.strokeWidth = 0;
+                        pieSeries2.slices.template.strokeOpacity = 1;
+                        pieSeries2.slices.template.states.getKey("hover").properties.shiftRadius = 0.05;
+                        pieSeries2.slices.template.states.getKey("hover").properties.scale = 1;
+
+                        pieSeries2.labels.template.disabled = true;
+                        pieSeries2.ticks.template.disabled = true;
+
+
+                        var label = chart.seriesContainer.createChild(am4core.Label);
+                        label.textAlign = "middle";
+                        label.horizontalCenter = "middle";
+                        label.verticalCenter = "middle";
+                        label.adapter.add("text", function (text, target) {
+                            return "[font-size:18px]Totally Achived[/]:\n[bold font-size:30px]" + Achived + "[/]";
+                        })
+
+                    }); // end am4core.ready()
+
+                </script>
+
+            </div>
+
+
+        </div>-->
+        <!-- income end -->
+    </div>
+</div>
+@section Scripts{
+    <!-- gauge js -->
+    <script src="~/files/assets/pages/widget/gauge/gauge.min.js"></script>
+    <script src="~/files/assets/pages/widget/amchart/amcharts.js"></script>
+    <script src="~/files/assets/pages/widget/amchart/serial.js"></script>
+    <script src="~/files/assets/pages/widget/amchart/gauge.js"></script>
+    <script src="~/files/assets/pages/widget/amchart/pie.js"></script>
+    <script src="~/files/assets/pages/widget/amchart/light.js"></script>
+    <!-- Custom js -->
+    <script src="~/files/assets/js/pcoded.min.js"></script>
+    <script src="~/files/assets/js/vartical-layout.min.js"></script>
+    <script src="~/files/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript" src="~/files/assets/pages/dashboard/crm-dashboard.min.js"></script>
+    <script type="text/javascript" src="~/files/assets/js/script.js"></script>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-23581568-13');
+    </script>
+}
+
+<!-- Styles -->
+<!--<style>
+    #chartdiv {
+        width: 100%;
+        height: 500px;
+    }
+</style>-->
+<!-- Chart code -->
+<script>
+    am4core.ready(function () {
+
+        // Themes begin
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+
+        var chart = am4core.create("chartdiv1", am4charts.XYChart);
+
+        // some extra padding for range labels
+        chart.paddingBottom = 50;
+
+        chart.cursor = new am4charts.XYCursor();
+        chart.scrollbarX = new am4core.Scrollbar();
+
+        // will use this to store colors of the same items
+        var colors = {};
+
+        var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.dataFields.category = "category";
+        categoryAxis.renderer.minGridDistance = 60;
+        categoryAxis.renderer.grid.template.location = 0;
+        categoryAxis.dataItems.template.text = "{realName}";
+        categoryAxis.adapter.add("tooltipText", function (tooltipText, target) {
+            return categoryAxis.tooltipDataItem.dataContext.realName;
+        })
+
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.tooltip.disabled = true;
+        valueAxis.min = 0;
+
+        // single column series for all data
+        var columnSeries = chart.series.push(new am4charts.ColumnSeries());
+        columnSeries.columns.template.width = am4core.percent(80);
+        columnSeries.tooltipText = "{realName}, {valueY}";
+        columnSeries.dataFields.categoryX = "category";
+        columnSeries.dataFields.valueY = "value";
+
+        // second value axis for quantity
+        var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis2.renderer.opposite = true;
+        valueAxis2.syncWithAxis = valueAxis;
+        valueAxis2.tooltip.disabled = true;
+
+        // quantity line series
+        var lineSeries = chart.series.push(new am4charts.LineSeries());
+        lineSeries.tooltipText = "{valueY}";
+        lineSeries.dataFields.categoryX = "category";
+        lineSeries.dataFields.valueY = "quantity";
+        lineSeries.yAxis = valueAxis2;
+        lineSeries.bullets.push(new am4charts.CircleBullet());
+        lineSeries.stroke = chart.colors.getIndex(13);
+        lineSeries.fill = lineSeries.stroke;
+        lineSeries.strokeWidth = 2;
+        lineSeries.snapTooltip = true;
+
+        // when data validated, adjust location of data item based on count
+        lineSeries.events.on("datavalidated", function () {
+            lineSeries.dataItems.each(function (dataItem) {
+                // if count divides by two, location is 0 (on the grid)
+                if (dataItem.dataContext.count / 2 == Math.round(dataItem.dataContext.count / 2)) {
+                    dataItem.setLocation("categoryX", 0);
+                }
+                // otherwise location is 0.5 (middle)
+                else {
+                    dataItem.setLocation("categoryX", 0.5);
+                }
+            })
+        })
+
+        // fill adapter, here we save color value to colors object so that each time the item has the same name, the same color is used
+        columnSeries.columns.template.adapter.add("fill", function (fill, target) {
+            var name = target.dataItem.dataContext.realName;
+            if (!colors[name]) {
+                colors[name] = chart.colors.next();
+            }
+            target.stroke = colors[name];
+            return colors[name];
+        })
+
+
+        var rangeTemplate = categoryAxis.axisRanges.template;
+        rangeTemplate.tick.disabled = false;
+        rangeTemplate.tick.location = 0;
+        rangeTemplate.tick.strokeOpacity = 0.6;
+        rangeTemplate.tick.length = 60;
+        rangeTemplate.grid.strokeOpacity = 0.5;
+        rangeTemplate.label.tooltip = new am4core.Tooltip();
+        rangeTemplate.label.tooltip.dy = -10;
+        rangeTemplate.label.cloneTooltip = false;
+
+        ///// DATA
+        var chartData = [];
+        var lineSeriesData = [];
+        var SalesArray = @Html.Raw(Json.Serialize(Model.HotelsAndSales));
+
+        $.each(SalesArray, function (key, item) {
+
+            chartData[item.hotel] = item.sales;
+        })
+        var data =
+        {
+            "": chartData
+        }
+
+
+        // process data ant prepare it for the chart
+        for (var providerName in data) {
+            var providerData = data[providerName];
+
+            // add data of one provider to temp array
+            var tempArray = [];
+            var count = 0;
+            // add items
+            for (var itemName in providerData) {
+                if (itemName != "quantity") {
+                    count++;
+                    // we generate unique category for each column (providerName + "_" + itemName) and store realName
+                    tempArray.push({ category: providerName + "_" + itemName, realName: itemName, value: providerData[itemName], provider:"" })
+                }
+            }
+            // sort temp array
+            tempArray.sort(function (a, b) {
+                if (a.value > b.value) {
+                    return 1;
+                }
+                else if (a.value < b.value) {
+                    return -1
+                }
+                else {
+                    return 0;
+                }
+            })
+
+            // add quantity and count to middle data item (line series uses it)
+            var lineSeriesDataIndex = Math.floor(count / 2);
+            tempArray[lineSeriesDataIndex].quantity = providerData.quantity;
+            tempArray[lineSeriesDataIndex].count = count;
+            // push to the final data
+            am4core.array.each(tempArray, function (item) {
+                chartData.push(item);
+            })
+
+            // create range (the additional label at the bottom)
+            var range = categoryAxis.axisRanges.create();
+            range.category = tempArray[0].category;
+            range.endCategory = tempArray[tempArray.length - 1].category;
+            range.label.text = tempArray[0].provider;
+            range.label.dy = 30;
+            range.label.truncate = true;
+            range.label.fontWeight = "bold";
+            range.label.tooltipText = tempArray[0].provider;
+
+            range.label.adapter.add("maxWidth", function (maxWidth, target) {
+                var range = target.dataItem;
+                var startPosition = categoryAxis.categoryToPosition(range.category, 0);
+                var endPosition = categoryAxis.categoryToPosition(range.endCategory, 1);
+                var startX = categoryAxis.positionToCoordinate(startPosition);
+                var endX = categoryAxis.positionToCoordinate(endPosition);
+                return endX - startX;
+            })
+        }
+
+        chart.data = chartData;
+
+
+        // last tick
+        var range = categoryAxis.axisRanges.create();
+        range.category = chart.data[chart.data.length - 1].category;
+        range.label.disabled = true;
+        range.tick.location = 1;
+        range.grid.location = 1;
+
+
+
+
+
+
+    }); // end am4core.ready()
+
+</script>
+
+

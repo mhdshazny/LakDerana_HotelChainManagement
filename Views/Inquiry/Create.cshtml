@@ -1,0 +1,110 @@
+﻿@model LakDerana_HotelChainManagement.ViewModels.CustomerViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Model.ID = ViewBag.NewID;
+    Layout = null;
+}
+
+<h4>Create Inquiry</h4>
+@*<h5 class="pull-right">@ViewBag.ReturnMsg</h5>*@
+<hr />
+
+<form asp-action="upsert" method="post">
+    <div asp-validation-summary="None" class="text-danger"></div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="ID" class="control-label"></label>
+                <input asp-for="ID" class="form-control" readonly />
+                <span asp-validation-for="ID" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="CusfName" class="control-label"></label>
+                <input asp-for="CusfName" class="form-control"/>
+                <span asp-validation-for="CusfName" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="CuslName" class="control-label"></label>
+                <input asp-for="CuslName" class="form-control" />
+                <span asp-validation-for="CuslName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="CusNIC" class="control-label"></label>
+                <input asp-for="CusNIC" class="form-control" />
+                <span asp-validation-for="CusNIC" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="CusAddress" class="control-label"></label>
+                <textarea asp-for="CusAddress" class="form-control"></textarea>
+                <span asp-validation-for="CusAddress" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="CusGender" class="control-label"></label>
+                <input asp-for="CusGender" class="form-control" />
+                <span asp-validation-for="CusGender" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="CusContact" class="control-label"></label>
+                <input asp-for="CusContact" class="form-control" />
+                <span asp-validation-for="CusContact" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="CusEmail" class="control-label"></label>
+                <input asp-for="CusEmail" class="form-control" />
+                <span asp-validation-for="CusEmail" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="CusStatus" class="control-label"></label>
+                <input asp-for="CusStatus" class="form-control" value="Inquiry" readonly />
+                <span asp-validation-for="CusStatus" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <input type="reset" value="Cancel" class="btn btn-block btn-info" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-block btn-primary" />
+            </div>
+        </div>
+    </div>
+
+
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

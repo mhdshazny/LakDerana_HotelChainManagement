@@ -1,0 +1,135 @@
+﻿@model LakDerana_HotelChainManagement.ViewModels.PaymentViewModel
+
+<h4>Update Payment</h4>
+<hr />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <form asp-action="upsert">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="ID" class="control-label"></label>
+                            <input asp-for="ID" class="form-control" readonly />
+                            <span asp-validation-for="ID" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="ReservationID" class="control-label"></label>
+                            @*<input asp-for="ReservationID" class="form-control" />*@
+                            @Html.DropDownListFor(m => m.ReservationID, ViewData["PendingReservationList"] as SelectList, "-Select Reservation -", new { @class = "form-control" })
+                            <span asp-validation-for="ReservationID" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="ReservationFee" class="control-label"></label>
+                            <input asp-for="ReservationFee" class="form-control" onchange="CalcTot()" />
+                            <span asp-validation-for="ReservationFee" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="HotelServiceCharge" class="control-label"></label>
+                            <input asp-for="HotelServiceCharge" class="form-control" onchange="CalcTot()" />
+                            <span asp-validation-for="HotelServiceCharge" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="NetAmount" class="control-label"></label>
+                            <input asp-for="NetAmount" class="form-control" onchange="CalcTot()" />
+                            <span asp-validation-for="NetAmount" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="DiscountAmount" class="control-label"></label>
+                            <input asp-for="DiscountAmount" class="form-control" onchange="CalcTot()" />
+                            <span asp-validation-for="DiscountAmount" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="TotalPayableAmount" class="control-label"></label>
+                            <input asp-for="TotalPayableAmount" class="form-control" readonly />
+                            <span asp-validation-for="TotalPayableAmount" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="AdvancePaymentAmount" class="control-label"></label>
+                            <input asp-for="AdvancePaymentAmount" class="form-control" onchange="CalcTot()" />
+                            <span asp-validation-for="AdvancePaymentAmount" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="FinalPaymentDate" class="control-label"></label>
+                            <input asp-for="FinalPaymentDate" class="form-control" type="datetime-local" value="@System.DateTime.Now" />
+                            <span asp-validation-for="FinalPaymentDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="PaymentStatus" class="control-label"></label>
+                            @*<input asp-for="PaymentStatus" class="form-control" />*@
+                            <select asp-for="PaymentStatus" class="form-control">
+                                <option value="Initial Deposit Pending">Initial Deposit Pending</option>
+                                <option value="Initial Deposit Done">Initial Deposit Done</option>
+                                <option value="All Payments Done">All Payments Done</option>
+                                <option value="Reservation Cancelled">Reservation Cancelled (All Payments Refunded)</option>
+                            </select>
+                            <span asp-validation-for="PaymentStatus" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <input type="reset" value="Cancel" class="btn btn-block btn-primary" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <input type="submit" value="Update" class="btn btn-block btn-primary" />
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function CalcTot() {
+        var ReservationFee = parseFloat($('#ReservationFee').val());
+        var HotelServiceCharge = parseFloat($('#HotelServiceCharge').val());
+        var NetAmount = parseFloat($('#NetAmount').val());
+        var DiscountAmount = parseFloat($('#DiscountAmount').val());
+        var AdvancePaymentAmount = parseFloat($('#AdvancePaymentAmount').val());
+
+        var Tot = ReservationFee + HotelServiceCharge + NetAmount;
+        var RemainingPayment = Tot - DiscountAmount;
+
+        $('#TotalPayableAmount').val(RemainingPayment+".00");
+    }
+
+
+</script>

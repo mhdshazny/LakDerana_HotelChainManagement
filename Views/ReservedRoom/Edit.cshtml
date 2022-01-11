@@ -1,0 +1,115 @@
+﻿@model LakDerana_HotelChainManagement.ViewModels.ReservedRoomViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
+}
+
+
+<h4>Change Room Reservation</h4>
+<hr />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <form asp-action="upsert">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ID"/>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="ReservationID" class="control-label"></label>
+                            <input asp-for="ReservationID" class="form-control" />
+                            @*@Html.DropDownListFor(m => m.ReservationID, ViewData["RerservationList"] as SelectList, "-Select Reservation-", new { @class = "form-control" })*@
+                            <span asp-validation-for="ReservationID" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="RoomID" class="control-label"></label>
+                            <input asp-for="RoomID" class="form-control" />
+                            @*@Html.DropDownListFor(m => m.RoomID, ViewData["RoomList"] as SelectList, "-Select Hotel Room-", new { @class = "form-control" })*@
+                            <span asp-validation-for="RoomID" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="DateRage" class="control-label"></label>
+                            <input asp-for="DateRage" type="text" class="form-control" />
+                            <span asp-validation-for="DateRage" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="SpecialDescription" class="control-label"></label>
+                            <input asp-for="SpecialDescription" class="form-control" />
+                            <span asp-validation-for="SpecialDescription" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="CurrentRoomCharge" class="control-label"></label>
+                            <input asp-for="CurrentRoomCharge" class="form-control" />
+                            <span asp-validation-for="CurrentRoomCharge" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="TotalPayableAmount" class="control-label"></label>
+                            <input asp-for="TotalPayableAmount" class="form-control" />
+                            <span asp-validation-for="TotalPayableAmount" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Status" class="control-label"></label>
+                            @*<input asp-for="Status" class="form-control" />*@
+                            <select asp-for="Status" class="form-control">
+                                <option value="Reservation Approved">Reservation Approved</option>
+                                <option value="Reservation Cancelled">Reservation Cancelled</option>
+                            </select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <input type="reset" value="Cancel" class="btn btn-block btn-info" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <input type="submit" value="Update" class="btn btn-block btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('input[name="DateRage"]').load(function () {
+            filterBooking();
+        });
+    });
+    $(function () {
+        $('input[name="DateRage"]').daterangepicker({
+            opens: 'left',
+            autoUpdateInput: true,
+            
+
+        });
+    });
+</script>

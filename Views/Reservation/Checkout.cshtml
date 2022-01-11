@@ -1,0 +1,459 @@
+﻿@model LakDerana_HotelChainManagement.ViewModels.CheckoutViewModel
+
+@{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<br />
+<br />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8">
+            <h2>Details : @Model.Reservation.ID  : @Model.Reservation.Status</h2>
+            <h2>Customer : @Model.Customer.CusfName  (@Model.Customer.CusNIC)</h2>
+
+        </div>
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    @if (Model.Reservation.Status == "Reservation Closed")
+                    {
+                        <a asp-action="Invoice" asp-controller="Reports" asp-route-id="@Model.Reservation.ID" name="Invoice" class="btn btn-block btn-primary">Generate Invoice <br /> <i class="fas fa-folder-open"></i></a>
+                    }
+                    else
+                    {
+                        <a href="#" name="Invoice" class="btn btn-block btn-primary disabled">Reservation Not Closed Yet <br /> Invoice Not Ready <br /> <i class="fas fa-folder-open"></i> </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+
+
+
+
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <dl>
+                                <dt class="col text-primary">
+                                    Reservation ID
+                                </dt>
+                                <dd class="col">
+                                    @Html.DisplayFor(model => model.Reservation.ID)
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col">
+                            <dl>
+                                <dt class="col text-primary">
+                                    Customer Name & ID
+                                </dt>
+                                <dd class="col">
+                                    @Html.DisplayFor(model => model.Customer.ID) &nbsp;&nbsp;
+                                    @Html.DisplayFor(model => model.Customer.CusfName)
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col">
+                            <dl>
+                                <dt class="col text-primary">
+                                    CheckIn Date
+                                </dt>
+                                <dd class="col">
+                                    @Html.DisplayFor(model => model.Reservation.CheckInDate)
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col">
+                            <dl>
+                                <dt class="col text-primary">
+                                    Checkout Date
+                                </dt>
+                                <dd class="col">
+                                    @Html.DisplayFor(model => model.PaymentData.FinalPaymentDate)
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col">
+                            <dl>
+                                <dt class="col text-primary">
+                                    Reservation Status
+                                </dt>
+                                <dd class="col">
+                                    @Html.DisplayFor(model => model.Reservation.Status)
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col">
+                            <dl>
+                                <dt class="col text-primary">
+                                    Room Charge
+                                </dt>
+                                <dd class="col">
+                                    Rs. @Html.DisplayFor(model => model.PaymentData.NetAmount)
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col">
+                            <dl>
+                                <dt class="col text-primary">
+                                    Reservation Fee
+                                </dt>
+                                <dd class="col">
+                                    Rs. @Html.DisplayFor(model => model.PaymentData.ReservationFee)
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col">
+                            <dl>
+                                <dt class="col text-primary">
+                                    Service Charge
+                                </dt>
+                                <dd class="col">
+                                    Rs. @Html.DisplayFor(model => model.PaymentData.HotelServiceCharge)
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col">
+                            <dl>
+                                <dt class="col text-primary">
+                                    Discount
+                                </dt>
+                                <dd class="col">
+                                    Rs. @Html.DisplayFor(model => model.PaymentData.DiscountAmount)
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col">
+                            <dl>
+                                <dt class="col text-primary">
+                                    Total Amount
+                                </dt>
+                                <dd class="col">
+                                    Rs. @Html.DisplayFor(model => model.PaymentData.TotalPayableAmount)
+                                </dd>
+                            </dl>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="row">
+
+                        <div class="col">
+                            <dl>
+                                <dt class="col text-primary">
+                                    Remaining Amount
+                                </dt>
+                                @{
+                                    var Remaining = Model.PaymentData.TotalPayableAmount - Model.PaymentData.DiscountAmount - Model.PaymentData.AdvancePaymentAmount;
+                                }
+                                @if (Model.PaymentData.PaymentStatus == "All Payments Done")
+                                {
+                                    <dd class="col">
+                                        Rs. 0.00
+                                    </dd>
+                                }
+                                else
+                                {
+                                    <div class="row text-center">
+                                        <dd class="col">
+                                            Rs.@Html.Raw(Remaining.ToString("0.00"))
+                                        </dd>
+                                        <dd class="col pull-right">
+                                            <a asp-action="Edit" asp-controller="Payment" asp-route-id="@Model.PaymentData.ID" ><i class="fa fa-check-circle fa-2x"></i>Complete Payment Now</a>
+                                        </dd>
+                                    </div>
+                                }
+                            </dl>
+                        </div>
+                        <div class="col">
+                            <dl>
+                                <dt class="col text-primary">
+                                    @Html.DisplayNameFor(model => model.Reservation.PaymentStatus)
+                                </dt>
+                                <dd class="col">
+                                    @Html.DisplayFor(model => model.Reservation.PaymentStatus)
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col">
+                            @if (Model.Reservation.Status == "Reservation Closed")
+                            {
+                                <a href="#" class="disabled"> Reservation Cancelled/Closed</a>
+
+                            }
+                            else
+                            {
+                                <a asp-action="Index" asp-controller="ReservedRoom"> Add/Change Rooms</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <br />
+            @if (Model.Reservation.Status == "Reservation Closed")
+            {
+                <div class="card bg-primary">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col"><h4>Reservation Status : @Model.Reservation.Status</h4></div>
+                            <div class="col"><h4>Payments : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  All Payments Completed</h4></div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.Reservation.Status != "Reservation Closed")
+            {
+                <div class="card bg-danger">
+                    <div class="card-body">
+                        <div class="row">
+
+                            @if (Model.PaymentData.PaymentStatus == "All Payments Done")
+                            {
+                                <div class="col-5"><h4>Payment Pending : Rs. 0.00</h4></div>
+                                <div class="col-5"><h4>Reservation : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Payments Completed</h4></div>
+                                <div class="col"><button class="btn  btn-primary btn-block" onclick="ConfirmCheckout()">Checkout <i class="fas fa-check-circle"></i></button></div>
+                                @*<div class="col"><button class="btn  btn-primary btn-block" data-toggle="modal" data-target="#CheckoutModal">Checkout <i class="fas fa-check-circle"></i></button></div>*@
+                            }
+                            else
+                            {
+                                <div class="col-5"><h4>Payment Pending : Rs. @Remaining.ToString("0.00")</h4></div>
+                                <div class="col-5"><h4>Reservation : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Payments Pending</h4></div>
+                                <div class="col"><button class="btn  btn-secondary" disabled>Checkout <i class="fas fa-close"></i></button></div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Logout Modal-->
+                <div class="modal fade" id="CheckoutModal" tabindex="-1" role="dialog" aria-labelledby="CheckoutModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="col-lg-12">
+                            <form asp-action="CheckoutNow" asp-controller="Reservation" method="post">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Ready to Finish?</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label asp-for="Reservation.ID" class="control-label"></label>
+                                                <input asp-for="Reservation.ID" class="form-control" value="@Model.Reservation.ID" readonly />
+                                                <span asp-validation-for="Reservation.ID" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label asp-for="Reservation.CheckoutDate" class="control-label"></label>
+                                                @*<input asp-for="Reservation.CheckoutDate" class="form-control" value="@DateTime.Now.ToString()" />*@
+                                                @*<span asp-validation-for="Reservation.CheckoutDate" class="text-danger"></span>*@
+                                            </div>
+                                        </div>
+                                        @*Select "Finish" below if you are ready to end your current Job.*@
+                                        @*<input type="datetime" name="EndDT" class="input" value="@DateTime.Now.ToString()" />*@
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                        <input type="submit" name="submit" class="btn btn-primary" value="Checkout" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <br />
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col"><h3 class="bold text-primary">Reserved Rooms</h3></div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md col-lg col-sm col-xs-12">
+                            <table class="table table-responsive" id="IndexTable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Reservation
+                                        </th>
+                                        <th>
+                                            Room
+                                        </th>
+                                        <th>
+                                            Check In
+                                        </th>
+                                        <th>
+                                            Check Out
+                                        </th>
+                                        <th>
+                                            Special Note
+                                        </th>
+                                        <th>
+                                            Room Charge
+                                        </th>
+                                        <th>
+                                            Total Amount
+                                        </th>
+                                        <th>
+                                            Room Resrv Status
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ReservedRooms)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ReservationID)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.RoomID)
+                                            </td>
+                                            <td>
+                                                @item.FromDate.ToString("MMM/dd/yy hh:mm tt")
+                                            </td>
+                                            <td>
+                                                @item.ToDate.ToString("MMM/dd/yy hh:mm tt")
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SpecialDescription)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CurrentRoomCharge)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TotalPayableAmount)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Status)
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+
+    </div>
+</div>
+
+
+
+
+
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col">
+            @*@if (HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Admin" || HttpContextAccessor.HttpContext.Session.GetString("SessionEmpRole") == "Manager")
+        {
+            <a asp-action="Edit" asp-route-id="@Model.Job_ID" class="btn btn-primary btn-block">Edit</a>
+
+        }
+        else
+        {
+            <a asp-action="Edit" asp-route-id="@Model.Job_ID" class="btn btn-primary btn-block disabled">Edit</a>
+        }*@
+            <a asp-action="Edit" asp-controller="Reservation" asp-route-id="@Model.Reservation.ID" class="btn btn-primary btn-block">Edit</a>
+
+        </div>
+        <div class="col">
+            <a asp-action="Index" class="btn btn-secondary btn-block">Back to List</a>
+        </div>
+    </div>
+</div>
+
+<br />
+
+
+<br /><script>
+
+    function ConfirmCheckout() {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-danger m-2',
+                cancelButton: 'btn btn-info m-2'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "DO you want to Checkout this Reservation!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Checkout!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Checkout/CheckoutNow",
+                    data: { id: '@Html.Raw(Model.Reservation.ID)'},
+                    success: function (result) {
+                        if (result == true) {
+                            swalWithBootstrapButtons.fire(
+                                'Success',
+                                'Checkout Successfull :)',
+                                'Success'
+                            ).then((res) => {
+                                if (res.isConfirmed) {
+                                    location.reload();
+                                }
+                            })
+                        }
+                        else {
+                            swalWithBootstrapButtons.fire(
+                                'Error',
+                                'Your Data is safe :)',
+                                'error'
+                            )
+                        }
+                    }
+                })
+
+            }
+            else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                //swalWithBootstrapButtons.fire(
+                //    'Cancelled',
+                //    'Your data is safe :)',
+                //    'error'
+                //)
+            }
+        })
+    }
+</script>

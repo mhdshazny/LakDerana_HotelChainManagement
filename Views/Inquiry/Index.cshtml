@@ -1,0 +1,207 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<LakDerana_HotelChainManagement.ViewModels.CustomerViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Breadcrumb -->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">Inquiry</li>
+    <li class="breadcrumb-item active">Manage Inquiries</li>
+
+    <!-- Breadcrumb Menu-->
+    <li class="breadcrumb-menu d-md-down-none">
+        <div class="btn-group" role="group" aria-label="Button group">
+            <a class="btn" href="#"><i class="icon-speech"></i></a>
+            <a class="btn" href="./"><i class="fa fa-bar-chart"></i> &nbsp;Manage Inquiries</a>
+        </div>
+    </li>
+</ol>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h2>Manage Inquiries</h2>
+        </div>
+        <div class="col">
+            <h5 class="pull-right text-danger">@ViewBag.ReturnMsg</h5>
+        </div>
+    </div>
+
+    <hr />
+    <div class="card">
+        <div class="card-body">
+            @if (ViewBag.InOut == "Up")
+            {
+
+                @await Html.PartialAsync("Edit", new LakDerana_HotelChainManagement.ViewModels.CustomerViewModel())
+
+            }
+            else if (ViewBag.InOut == "In")
+            {
+
+                @await Html.PartialAsync("Create", new LakDerana_HotelChainManagement.ViewModels.CustomerViewModel())
+
+            }
+
+        </div>
+    </div>
+
+
+    <hr />
+
+    <div class="card">
+        <div class="card-body">
+            <h4>All Inquiries</h4><hr />
+
+            <table class="table table-responsive" id="IndexTable">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CusfName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CuslName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CusNIC)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CusGender)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CusAddress)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CusContact)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CusEmail)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CusStatus)
+                        </th>
+                        <th class="text-success text-center">
+                            @Html.DisplayNameFor(model => model.ReservationCount)
+                        </th>
+                        <th class="text-danger">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CusfName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CuslName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CusNIC)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CusGender)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CusAddress)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CusContact)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CusEmail)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CusStatus)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.ReservationCount) - Reservations
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.ID"><i class="fa fa-edit fa-lg"></i></a> |
+                                <a asp-action="Details" asp-route-id="@item.ID"><i class="fa fa-info fa-lg"></i></a>
+
+                                @if (@HttpContextAccessor.HttpContext.Session.GetString("UserType") == "System Administrator")
+                                {
+
+                                    <a href="#" onclick="ConfirmDelete('@item.ID')">|<i class="fa fa-remove fa-lg"></i></a>
+                                }
+                                @*<a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function ConfirmDelete(e) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-danger m-2',
+                cancelButton: 'btn btn-info m-2'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Inquiry/Delete",
+                    data: { id: e },
+                    success: function (result) {
+                        if (result == "Success") {
+                            swalWithBootstrapButtons.fire(
+                                'Success',
+                                'Your Data is Deleted :)',
+                                'Success'
+                            ).then((res) => {
+                                if (res.isConfirmed) {
+                                    location.reload();
+                                }
+                            })
+                        }
+                        else {
+                            swalWithBootstrapButtons.fire(
+                                'Error',
+                                'Your Data is safe :)',
+                                'error'
+                            )
+                        }
+                    }
+                })
+
+            }
+            else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                //swalWithBootstrapButtons.fire(
+                //    'Cancelled',
+                //    'Your data is safe :)',
+                //    'error'
+                //)
+            }
+        })
+    }
+</script>
+
+

@@ -1,0 +1,96 @@
+﻿@model LakDerana_HotelChainManagement.ViewModels.BarViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
+}
+
+
+<h4>Update Bar Expense/Income</h4>
+<hr />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <form asp-action="EditAsync" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="ID" class="form-control" hidden />
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="HotelID" class="control-label"></label>
+                            <input asp-for="HotelID" class="form-control" required />
+                            <span asp-validation-for="HotelID" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="EmpUpdatedBy" class="control-label"></label>
+                            <input asp-for="EmpUpdatedBy" class="form-control" required />
+                            <span asp-validation-for="EmpUpdatedBy" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="IncomeExpenseUpdatedDate" class="control-label"></label>
+                            <input asp-for="IncomeExpenseUpdatedDate" class="form-control" />
+                            <span asp-validation-for="IncomeExpenseUpdatedDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Expense" class="control-label"></label>
+                            <input asp-for="Expense" class="form-control" min="1" />
+                            <span asp-validation-for="Expense" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Sales" class="control-label"></label>
+                            <input asp-for="Sales" class="form-control" min="1" />
+                            <span asp-validation-for="Sales" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Status" class="control-label"></label>
+                            @*<input asp-for="Status" class="form-control" />*@
+                            <select asp-for="Status" class="form-control">
+                                <option value="Approved">Approved</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <input type="reset" value="Cancel" class="btn btn-block btn-info" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <input type="submit" value="Update" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+﻿@model IEnumerable<LakDerana_HotelChainManagement.Models.PaymentModel>
+
+@{
+    ViewData["Title"] = "SalesReport";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Sales Report</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="jumbotron-fluid" style="text-align:center;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size:larger">
+        <h1 class="text-center">Sales Report</h1>
+        <h4 class="text-center">All Sales details from the beginning</h4>
+        <h5 class="text-center">Lak-Derana Hotels Pvt Ltd </h5>
+        <h6 class="text-center" id="para1"></h6>
+    </div>
+    <br />
+    <h4 style="font-weight:bold; margin-bottom:2%;">Sales Statistics</h4>
+    <div>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+        <h5>Total Number of Transaction = <em style="color:crimson; font-style: normal;"> @Model.Count() </em></h5>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+        <h5>Total Sales = <em style="color:crimson; font-style: normal;"> @Model.Where(m => m.PaymentStatus == "All Payments Done").Sum(i => i.TotalPayableAmount) </em></h5>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+        <h5>Total Sales of Pending/Waiting Transactions = <em style="color:crimson; font-style: normal;"> @Model.Where(m => m.PaymentStatus != "All Payments Done").Sum(i => i.TotalPayableAmount) </em></h5>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+    </div>
+    <h4 style="font-weight:bold;margin-top:5%; margin-bottom:2%; ">All Sales Records</h4>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReservationID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReservationFee)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HotelServiceCharge)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NetAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DiscountAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalPayableAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AdvancePaymentAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FinalPaymentDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PaymentStatus)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReservationID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReservationFee)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HotelServiceCharge)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NetAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiscountAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPayableAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AdvancePaymentAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FinalPaymentDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaymentStatus)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>

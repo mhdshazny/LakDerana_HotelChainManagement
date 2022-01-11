@@ -1,0 +1,180 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<LakDerana_HotelChainManagement.ViewModels.HotelRoomViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Breadcrumb -->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">Hotel Rooms</li>
+    <li class="breadcrumb-item active">Manage Hotel Rooms</li>
+
+    <!-- Breadcrumb Menu-->
+    <li class="breadcrumb-menu d-md-down-none">
+        <div class="btn-group" role="group" aria-label="Button group">
+            <a class="btn" href="#"><i class="icon-speech"></i></a>
+            <a class="btn" href="./"><i class="fa fa-bar-chart"></i> &nbsp;Manage Hotel Room</a>
+        </div>
+    </li>
+</ol>
+
+<div class="container-fluid">
+    <h2>Manage Hotel Rooms</h2>
+    <hr />
+    <div class="card">
+        <div class="card-body">
+            <h5 class="pull-right">@ViewBag.ReturnMsg</h5>
+            @if (ViewBag.InOut == "Up")
+            {
+                @await Html.PartialAsync("Edit", new LakDerana_HotelChainManagement.ViewModels.HotelRoomViewModel())
+
+            }
+            else if (ViewBag.InOut == "In")
+            {
+                @await Html.PartialAsync("Create", new LakDerana_HotelChainManagement.ViewModels.HotelRoomViewModel())
+
+            }
+
+        </div>
+    </div>
+
+
+    <hr />
+
+    <div class="card">
+        <div class="card-body">
+            <h4>All Hotel Rooms</h4><hr />
+
+            <table class="table table-responsive" id="IndexTable">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.HotelID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.RoomType)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.RoomPricePerNight)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.RoomDescription)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.RoomStatus)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.HotelID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RoomType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RoomPricePerNight)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RoomDescription)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RoomStatus)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.ID"><i class="fa fa-edit fa-lg"></i></a> |
+                                <a asp-action="Details" asp-route-id="@item.ID"><i class="fa fa-info fa-lg"></i></a>
+
+                                @if (@HttpContextAccessor.HttpContext.Session.GetString("UserType") == "System Administrator")
+                                {
+
+                                    <a href="#" onclick="ConfirmDelete('@item.ID')">|<i class="fa fa-remove fa-lg"></i></a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    function ConfirmDelete(e) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-danger m-2',
+                cancelButton: 'btn btn-info m-2'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "/HotelRoom/Delete",
+                    data: { id: e },
+                    success: function (result) {
+                        if (result == "Success") {
+                            swalWithBootstrapButtons.fire(
+                                'Success',
+                                'Your Data is Deleted :)',
+                                'Success'
+                            ).then((res) => {
+                                if (res.isConfirmed) {
+                                    location.reload();
+                                }
+                            })
+                        }
+                        else {
+                            swalWithBootstrapButtons.fire(
+                                'Error',
+                                'Your Data is safe :)',
+                                'error'
+                            )
+                        }
+                    }
+                })
+
+            }
+            else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                //swalWithBootstrapButtons.fire(
+                //    'Cancelled',
+                //    'Your data is safe :)',
+                //    'error'
+                //)
+            }
+        })
+    }
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

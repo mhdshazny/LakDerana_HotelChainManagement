@@ -1,0 +1,86 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Employee Attendance";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+@section Scripts{
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('#AttendanceModal').modal('show');
+            //$('.js-example-basic-single').select2();
+            //$('#daterange').daterangepicker();
+        });
+    </script>
+}
+
+<div class="modal fade" id="AttendanceModal">
+    <div class="modal-dialog modal-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="exampleModalLabel">Select Date to Mark Attendance</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @*@if (HttpContextAccessor.HttpContext.Session.GetString("SessionCusEmail") != "")
+                {*@
+            <form asp-action="SetAttendance" method="post">
+
+                <div class="modal-body">
+                    <div class="form-group" hidden>
+                        <label>Attendance Log ID</label>
+                        <input id="LogID" name="LogID" class="form-control" value="@ViewBag.NewID" hidden/>
+                    </div>
+                    <div class="form-group">
+                        <label>Attendance Date</label>
+                        <input id="DateTimeForLog" name="DateTimeForLog" class="form-control" type="datetime-local" value="@System.DateTime.Now" required/>
+                        <span id="DateTimeForLog" name="DateTimeForLog" class="text-danger">Please Enter a Valid Attendance Date</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Special Day Description</label>
+                        <textarea id="DayDescription" name="DayDescription" class="form-control" ></textarea>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary" data-save="modal">
+                        Go Ahead
+                    </button>
+                </div>
+            </form>
+
+            @*}
+                else
+                {*@
+            @*<div class="modal-body">
+                    <div class="step-one">
+                        <h2 class="heading">Please Login To Place an Order</h2>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="row mt-1">
+                        <div class="text-right">
+                            <a asp-action="Login" asp-controller="CustomerLogin" class="btn btn-block btn-primary btn-lg" data-slide="next">
+                                <i class="fa fa-lock-open">Login</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>*@
+
+            @*}*@
+
+        </div>
+    </div>
+</div>

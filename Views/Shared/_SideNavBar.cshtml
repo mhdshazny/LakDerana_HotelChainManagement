@@ -1,0 +1,177 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+<style>
+    .inner-item {
+        background-color: #29363d
+    }
+</style>
+<div class="sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" asp-action="Index" asp-controller="Home"><i class="fas fa-meteor"></i> Dashboard <i class="fa fa-line-chart pull-right mt-1"></i></a>
+            </li>
+
+            <li class="nav-title">
+                Management
+            </li>
+            @*@if (@HttpContextAccessor.HttpContext.Session.GetString("UserType") == "admin")
+        {
+        }*@
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link" asp-controller="Inquiry" asp-action="Index"><i class="fas fa-info-circle"></i>Manage Inquiry</a>
+                @*<ul class="nav-dropdown-items">
+                <li class="nav-item inner-item">
+                    <a class="nav-link" asp-controller="Inquiry" asp-action="Index"><i class="fa fa-info"></i>Manage Inquiry</a>
+                </li>
+
+
+            </ul>*@
+            </li>
+            <!--<li class="nav-item nav-dropdown">
+    <a class="nav-link" asp-controller="Customer" asp-action="Index"><i class="fa fa-users"></i>Manage Customers</a>-->
+            @*<ul class="nav-dropdown-items">
+            <li class="nav-item inner-item">
+                <a class="nav-link" asp-controller="Customer" asp-action="Index"><i class="fa fa-user-plus"></i>Manage Customers</a>
+            </li>
+
+
+        </ul>*@
+            <!--</li>-->
+            @if (@HttpContextAccessor.HttpContext.Session.GetString("UserType") == "System Administrator" || @HttpContextAccessor.HttpContext.Session.GetString("UserType") == "HR" || @HttpContextAccessor.HttpContext.Session.GetString("UserType") == "Manager in Charge")
+            {
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link nav-dropdown-toggle" href="#"><i class="fas fa-utensils"></i>Hotels</a>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item inner-item">
+                            <a class="nav-link" asp-controller="Hotel" asp-action="Index"><i class="fas fa-hotdog"></i>Manage Hotels</a>
+                        </li>
+                        <li class="nav-item inner-item">
+                            <a class="nav-link" asp-controller="HotelRoom" asp-action="Index"><i class="fas fa-hotdog"></i>Manage Hotel Rooms</a>
+                        </li>
+
+                    </ul>
+                </li>
+            }
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-cart-arrow-down"></i> Reservations</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item inner-item">
+                        <a class="nav-link" asp-controller="Reservation" asp-action="Index"><i class="fa fa-shopping-cart"></i>Manage Reservations</a>
+                    </li>
+
+                    <li class="nav-item inner-item">
+                        <a class="nav-link" asp-controller="ReservedRoom" asp-action="Index"><i class="fas fa-clipboard-list"></i> Reserved Rooms</a>
+                    </li>
+                    <li class="nav-item inner-item">
+                        <a class="nav-link" asp-controller="Payment" asp-action="Index"><i class="fas fa-clipboard-list"></i> Payments</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-folder"></i> Bar Management</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item inner-item">
+                        <a class="nav-link" asp-controller="Bar" asp-action="Index"><i class="fa fa-shopping-cart"></i>Manage Hotel Bar</a>
+                    </li>
+                    <li class="nav-item inner-item">
+                        <a class="nav-link" asp-controller="Bar" asp-action="Index"><i class="fas fa-clipboard-list"></i> Hotel Bar Report</a>
+                    </li>
+                </ul>
+            </li>
+            @if (@HttpContextAccessor.HttpContext.Session.GetString("UserType") == "System Administrator" || @HttpContextAccessor.HttpContext.Session.GetString("UserType") == "HR" || @HttpContextAccessor.HttpContext.Session.GetString("UserType") == "Manager in Charge")
+            {
+
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link nav-dropdown-toggle" href="#"><i class="fas fa-user-lock"></i> Employee</a>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item inner-item">
+                            <a class="nav-link" asp-controller="Employee" asp-action="Index"><i class="fa fa-user-plus"></i>Manage Employees</a>
+                        </li>
+                        <li class="nav-item inner-item">
+                            <a class="nav-link" asp-controller="Attendance" asp-action="Index"><i class="fa fa-user-plus"></i>Manage Attendance</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="divider"></li>
+                <li class="nav-title">
+                    Attendance Management
+                </li>
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-folder"></i> Attendance</a>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item inner-item">
+                            <a class="nav-link" asp-controller="Attendance" asp-action="Index"><i class="fa fa-shopping-cart"></i>Manage Employee Attendance</a>
+                        </li>
+                        <li class="nav-item inner-item">
+                            <a class="nav-link" asp-controller="Attendance" asp-action="Index"><i class="fas fa-clipboard-list"></i> Attendance Report</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="divider"></li>
+                <li class="nav-title">
+                    Reports
+                </li>
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-folder"></i> Reports</a>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item inner-item">
+                            <a class="nav-link" asp-action="CustomReport" asp-controller="Reports" target="_blank"><i class="fas fa-tools"></i> Customize Report</a>
+                        </li>
+                        <li class="nav-item inner-item">
+                            <a class="nav-link" asp-action="EmployeeReport" asp-controller="Reports" target="_blank"><i class="fa fa-folder-open-o"></i> Employee Report</a>
+                        </li>
+                        <li class="nav-item inner-item">
+                            <a class="nav-link" asp-action="BarSalesReport" asp-controller="Reports" target="_blank"><i class="fa fa-folder-open-o"></i> Bar Report</a>
+                        </li>
+                        <li class="nav-item inner-item">
+                            <a class="nav-link" asp-action="ReservationsReport" asp-controller="Reports" target="_blank"><i class="fa fa-folder-open-o"></i> Reservation Report</a>
+                        </li>
+                        <li class="nav-item inner-item">
+                            <a class="nav-link" asp-action="AllSalesReport" asp-controller="Reports" target="_blank"><i class="fa fa-folder-open-o"></i> Sales Report</a>
+                        </li>
+                    </ul>
+                </li>
+            }
+            @*<li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-cart-arrow-down"></i> Payments</a>
+            <ul class="nav-dropdown-items">
+                <li class="nav-item inner-item">
+                    <a class="nav-link" asp-controller="Payment" asp-action="Index"><i class="fa fa-shopping-cart"></i>Manage Payments</a>
+                </li>
+                <li class="nav-item inner-item">
+                    <a class="nav-link" asp-controller="Payment" asp-action="Index"><i class="fas fa-clipboard-list"></i> Reservation Payments</a>
+                </li>
+
+            </ul>
+        </li>*@
+
+            @*@if (@HttpContextAccessor.HttpContext.Session.GetString("UserType") == "admin")
+        {
+        }*@
+            @*<li class="divider"></li>
+        <li class="nav-title">
+            Bar Management
+        </li>
+        <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-folder"></i> Bar Management</a>
+            <ul class="nav-dropdown-items">
+                <li class="nav-item inner-item">
+                    <a class="nav-link" asp-controller="Bar" asp-action="Index"><i class="fa fa-shopping-cart"></i>Manage Hotel Bar</a>
+                </li>
+                <li class="nav-item inner-item">
+                    <a class="nav-link" asp-controller="Bar" asp-action="Index"><i class="fas fa-clipboard-list"></i> Hotel Bar Report</a>
+                </li>
+            </ul>
+        </li>*@
+
+        </ul>
+    </nav>
+    <nav class="nav-item mt-0 mb-0">
+        <p class="nav-link nav-link-success" target="_top"><i class="fas fa-calendar-times"></i><strong>@DateTime.Now.ToString("dd-ddd-MMM-yyyy")</strong></p>
+    </nav>
+    <button class="sidebar-minimizer brand-minimizer mt-auto" type="button"></button>
+</div>

@@ -1,0 +1,88 @@
+﻿@model IEnumerable<LakDerana_HotelChainManagement.Models.ReservationModel>
+
+@{
+    ViewData["Title"] = "ReservationsReport";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Menu Itemss Report</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="jumbotron-fluid" style="text-align:center;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size:larger">
+        <h1 class="text-center">Reservations Report</h1>
+        <h4 class="text-center">All Reservations details from the beginning</h4>
+        <h5 class="text-center">Lak-Derana Hotels Pvt Ltd </h5>
+        <h6 class="text-center" id="para1"></h6>
+    </div>
+    <br />
+    <h4 style="font-weight:bold; margin-bottom:2%;">Reservations Statistics</h4>
+    <div>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+        <h5>Total Number of Reservations = <em style="color:crimson; font-style: normal;"> @Model.Count() </em></h5>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+        <h5>Total Number of Completed Reservations = <em style="color:crimson; font-style: normal;"> @Model.Where(m => m.Status == "Available").Count() </em></h5>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+        <h5>Total Number of Pending/Waiting Reservations = <em style="color:crimson; font-style: normal;"> @Model.Where(m => m.Status != "Available").Count() </em></h5>
+        <hr style="height:1px;background-color:#cccccc;bMenu Items:none; margin-top:1%; margin-bottom:1%; " noshade />
+    </div>
+    <h4 style="font-weight:bold;margin-top:5%; margin-bottom:2%; ">All Reservation Records</h4>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Hotel)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Customer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CheckInDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CheckoutDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PaymentStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Hotel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Customer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CheckInDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CheckoutDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaymentStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>

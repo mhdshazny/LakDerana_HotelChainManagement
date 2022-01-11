@@ -1,0 +1,204 @@
+﻿@model LakDerana_HotelChainManagement.ViewModels.ProfileViewModel
+
+@{
+    ViewData["Title"] = "EmpProfile";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<br />
+<div class="container-fluid">
+    <div class="main-body">
+        <div class="page-wrapper">
+            <!-- Page-header start -->
+
+            <!-- Page-header end -->
+            <!-- Page-body start -->
+            <div class="page-body">
+                <!--profile cover start-->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="cover-profile">
+                            <div class="profile-bg-img">
+                                @*<img class="profile-bg-img img-fluid" src="~/Plugins/files/assets/images/user-profile/bg-3.png" alt="bg-img">*@
+                                <div class="card-block user-info">
+                                    <div class="col-md-12">
+                                        <div class="media-left">
+                                            <a href="#" class="profile-image">
+                                                <img class="user-img img-radius" src="~/Plugins/files/assets/images/user-profile/user-shaz.jpg" style="width:100px;height:100px" alt="user-img">
+                                            </a>
+                                        </div>
+                                        <div class="media-body row">
+                                            <div class="col-lg-12 text-dark">
+                                                <div class="user-title">
+                                                    <h2>@Model.EmployeeVM.fName @Model.EmployeeVM.lName</h2>
+                                                    <span >@Model.EmpIdentityVM.EmpRole</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--profile cover end-->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- tab header start -->
+                        <div class="">
+                            <ul class="nav nav-tabs md-tabs tab-timeline" role="tablist" id="mytab">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#personal" role="tab">Personal Info</a>
+                                    <div class="slide"></div>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#PassChange" role="tab">Change Password</a>
+                                    <div class="slide"></div>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#review" role="tab">Reviews</a>
+                                    <div class="slide"></div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- tab header end -->
+                        <!-- tab content start -->
+                        <div class="tab-content">
+                            <!-- tab panel personal start -->
+                            <div class="tab-pane active" id="personal" role="tabpanel">
+                                <!-- personal card start -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h2 class="card-header-text bold">About Me</h2>
+
+                                    </div>
+                                    <div class="card-block">
+                                        <div class="view-info">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="general-info">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-xl-6">
+                                                                <div class="table-responsive">
+                                                                    <table class="table m-0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <th scope="row">Full Name</th>
+                                                                                <td>@Model.EmployeeVM.fName @Model.EmployeeVM.lName</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th scope="row">Gender</th>
+                                                                                <td>@Model.EmployeeVM.Gender</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th scope="row">Birth Date</th>
+                                                                                <td>@Model.EmployeeVM.DoB.ToShortDateString()</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th scope="row">Location</th>
+                                                                                <td>@Model.EmployeeVM.Address</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            <!-- end of table col-lg-6 -->
+                                                            <div class="col-lg-12 col-xl-6">
+                                                                <div class="table-responsive">
+                                                                    <table class="table">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <th scope="row">Email</th>
+                                                                                <td><a href="#!"><span class="__cf_email__" data-cfemail="4206272f2d02273a232f322e276c212d2f">@Model.EmployeeVM.Email</span></a></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th scope="row">Mobile Number</th>
+                                                                                <td>@Model.EmployeeVM.Contact</td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <th scope="row">Employee Role</th>
+                                                                                <td>@Model.EmpIdentityVM.EmpRole</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            <!-- end of table col-lg-6 -->
+                                                        </div>
+                                                        <!-- end of row -->
+                                                    </div>
+                                                    <!-- end of general info -->
+                                                </div>
+                                                <!-- end of col-lg-12 -->
+                                            </div>
+                                            <!-- end of row -->
+                                        </div>
+                                        <!-- end of view-info -->
+                                        <!-- end of edit-info -->
+                                    </div>
+                                    <!-- end of card-block -->
+                                </div>
+
+                                <!-- personal card end-->
+                            </div>
+                            <!-- tab pane personal end -->
+
+                            <div class="tab-pane" id="review" role="tabpanel">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-header-text">Review</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="PassChange" role="tabpanel">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h2 class="card-header-text">Change Password</h2>
+                                    </div>
+                                    <div class="card-block">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <form asp-action="ChangePass" method="post">
+                                                        <input type="text" class="form-control" id="ID" name="ID" aria-describedby="IDHelp" value="@Model.EmpIdentityVM.Id" hidden>
+                                                        <div class="form-group">
+                                                            <label for="Email">Your Email address</label>
+                                                            <input type="email" class="form-control" id="Email" name="Email" aria-describedby="emailHelp" value="@Model.EmpIdentityVM.EmpEmail" readonly placeholder="Enter Email">
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label asp-for="Password" class="control-label"></label>
+                                                            <input asp-for="Password" class="form-control" type="password" />
+                                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label asp-for="ConfirmPassword" class="control-label"></label>
+                                                            <input asp-for="ConfirmPassword" class="form-control" type="password" />
+                                                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                                        </div>
+                                                        <br />
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- tab content end -->
+                    </div>
+                </div>
+            </div>
+            <!-- Page-body end -->
+        </div>
+    </div>
+</div>
+<br />
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
