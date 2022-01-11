@@ -501,8 +501,8 @@
                                         // Let's cut a hole in our Pie chart the size of 40% the radius
                                         chart.innerRadius = am4core.percent(60);
 
-                                        var Achived = @Model.Employee.AttendeeCount;
-                                        var Rem =@Model.Employee.AbcenteeCount;
+                                        var Achived = @Model.Employee.AbcenteeCount;
+                                        var Rem =@Model.Employee.AttendeeCount;
                                         let TargetTemp = Achived + Rem;
                                         $('#Target').text(TargetTemp)
                                         $('#Achieved').text(Achived)
