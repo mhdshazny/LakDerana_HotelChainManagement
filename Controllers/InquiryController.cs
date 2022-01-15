@@ -197,7 +197,7 @@ namespace LakDerana_HotelChainManagement.Controllers
         {
             bool valid = true;
             if (collection.CusAddress==null||collection.CusContact==null||collection.CusEmail==null||
-                collection.CusfName==null||collection.CusGender==null||collection.CuslName==null||collection.CusNIC==null||collection.CusPassw==null)
+                collection.CusfName==null||collection.CusGender==null||collection.CuslName==null||collection.CusNIC==null)
             {
                 valid = false;
             }

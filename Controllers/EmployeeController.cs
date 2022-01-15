@@ -19,12 +19,14 @@ namespace LakDerana_HotelChainManagement.Controllers
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
         private readonly EmployeeService service;
+        private readonly HotelService HotelService;
 
         public EmployeeController(ApplicationDbContext context,IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
             service = new EmployeeService(context, mapper);
+            HotelService = new HotelService(context, mapper);
         }
 
         // GET: Employee
@@ -55,6 +57,7 @@ namespace LakDerana_HotelChainManagement.Controllers
             {
                 ViewBag.InOut = "In";
             }
+            ViewData["HotelList"] = new SelectList(HotelService.GetDDList(), "ID", "HotelSpecialName", HttpContext.Session.GetString("UserHotelID").ToString());
 
             var GetList = service.GetList();
             ViewData["NewID"] = service.NewID();

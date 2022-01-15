@@ -154,8 +154,7 @@ namespace LakDerana_HotelChainManagement.Services
                     string subject;
                     string body;
 
-                    //string to = RSManager.Email;
-                    string to = "shaznykd@gmail.com";
+                    string to = RSManager.Email;
 
                     subject = "The Room Number :" + collection.RoomID + " at Hotel :" + Hotel.HotelSpecialName + " Reservation Closed and Returned On :" + DateTime.Now;
                     body = "The Room Number :" + collection.RoomID + " From Hotel :" + Hotel.HotelSpecialName + " as Earlier Reserved On :" + collection.FromDate + " for the Customer :" + Customer.CusfName + " | " + Customer.ID + " (" + Customer.CusNIC + ") is Returned for New Reservation";
@@ -188,8 +187,7 @@ namespace LakDerana_HotelChainManagement.Services
                     string subject;
                     string body;
 
-                    //string to = RSManager.Email;
-                    string to = "shaznykd@gmail.com";
+                    string to = RSManager.Email;
                     if (collection.Status == "Reservation Approved")
                     {
                         subject = "The Room Number :" + collection.RoomID + " at Hotel :" + Hotel.HotelSpecialName + " is Reserved On :" + collection.FromDate;

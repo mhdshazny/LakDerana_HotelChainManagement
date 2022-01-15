@@ -116,7 +116,14 @@
                     <div class="col">
                         <div class="form-group">
                             <label asp-for="EmployeeIdentityModel.HotelID" class="control-label"></label>
-                            <input asp-for="EmployeeIdentityModel.HotelID" class="form-control" value="@HttpContextAccessor.HttpContext.Session.GetString("UserHotelID")" readonly />
+                            @if (@HttpContextAccessor.HttpContext.Session.GetString("UserType") == "System Administrator")
+                            {
+                                @Html.DropDownListFor(m => m.EmployeeIdentityModel.HotelID, ViewData["HotelList"] as SelectList, "-Select Hotel -", new { @class = "form-control" })
+                            }
+                            else
+                            {
+                                <input asp-for="EmployeeIdentityModel.HotelID" class="form-control" value="@HttpContextAccessor.HttpContext.Session.GetString("UserHotelID")" readonly />
+                            }
                             <span asp-validation-for="EmployeeIdentityModel.HotelID" class="text-danger"></span>
                         </div>
                     </div>

@@ -35,10 +35,10 @@ namespace LakDerana_HotelChainManagement.ViewModels
         [DisplayName("Email ID")]
         [DataType(DataType.EmailAddress)]
         public string CusEmail { get; set; }
-        [Required(ErrorMessage = "Please provide a valid Customer Password.")]
-        [DisplayName("Password")]
-        [DataType(DataType.Password)]
-        public string CusPassw { get; set; }
+        //[Required(ErrorMessage = "Please provide a valid Customer Password.")]
+        //[DisplayName("Password")]
+        //[DataType(DataType.Password)]
+        //public string CusPassw { get; set; }
         [Required(ErrorMessage = "Please provide a valid Customer Status.")]
         [DisplayName("Status")]
         public string CusStatus { get; set; }
