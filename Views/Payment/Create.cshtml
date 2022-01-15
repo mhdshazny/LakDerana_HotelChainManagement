@@ -132,7 +132,7 @@
             var Tot = ReservationFee + HotelServiceCharge + NetAmount;
             var RemainingPayment = Tot - DiscountAmount;
 
-            $('#TotalPayableAmount').val(RemainingPayment + ".00");
+            $('#TotalPayableAmount').val(RemainingPayment.toFixed(2));
         }
 
 
